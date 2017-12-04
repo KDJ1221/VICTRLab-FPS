@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimDownSight: {x: -0.01, y: -0.81, z: 1.43}
   hipFire: {x: 0.378, y: -0.814, z: 1.433}
-  aimspeed: 10
+  aimspeed: 15
 --- !u!1001 &15725869
 Prefab:
   m_ObjectHideFlags: 0
@@ -3098,7 +3098,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
       propertyPath: m_LocalScale.x
@@ -4306,7 +4306,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 463538, guid: 9e88f465a62188048be0ebf3540044a7, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 100626, guid: 9e88f465a62188048be0ebf3540044a7, type: 2}
       propertyPath: m_Name
@@ -5060,7 +5060,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 487048, guid: 496e50a61b8345547ba0f0693d0fcf9e, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 487048, guid: 496e50a61b8345547ba0f0693d0fcf9e, type: 2}
       propertyPath: m_LocalScale.x
