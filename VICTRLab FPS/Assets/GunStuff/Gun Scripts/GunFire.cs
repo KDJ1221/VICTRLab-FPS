@@ -7,7 +7,10 @@ public class GunFire : MonoBehaviour {
     public float range = 100f;
 
     public Camera fpsCam;
-    public ParticleSystem muzzleFlash;
+    //public ParticleSystem muzzleFlash;
+
+    public GameObject muzzle1;
+    public GameObject muzzle2;
     
 	// Update is called once per frame
 	void Update () {
@@ -22,7 +25,7 @@ public class GunFire : MonoBehaviour {
         }
         public void Shoot(){
 
-            muzzleFlash.Play();
+           // muzzleFlash.Play();
 
             RaycastHit hit;
             if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
@@ -33,5 +36,8 @@ public class GunFire : MonoBehaviour {
             }
 
             }
+        muzzle1.SetActive(true);
+        muzzle2.SetActive(true);
+
         }
 	}
