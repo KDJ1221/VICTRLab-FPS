@@ -13,6 +13,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
+        [SerializeField] private float m_CrouchSpeed;
         [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
@@ -27,6 +28,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        //[SerializeField] private GameObject m_Gun;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -41,6 +43,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        //private AimDownSights aimScript;
+        private Crouch crouchScript;
+        public bool isCrouching;
+        public bool isAiming; 
 
         // Use this for initialization
         private void Start()
@@ -55,6 +61,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            isCrouching = false;
+            isAiming = false;
+            //aimScript = m_Gun.GetComponent<AimDownSights>();
+            crouchScript = gameObject.GetComponent<Crouch>();
+
         }
 
 
@@ -62,6 +73,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
             RotateView();
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                isCrouching = !isCrouching;
+                crouchScript.change(isCrouching);
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                isAiming = true;
+                //aimScript.Aim();
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                isAiming = false;
+                //aimScript.StopAim();
+            }
+
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
@@ -214,8 +242,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // keep track of whether or not the character is walking or running
             m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
 #endif
-            // set the desired speed to be walking or running
-            speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
+            // set the desired speed to be walking or running or crouching
+
+            float normspeed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
+            float aimspeed = isAiming ? m_CrouchSpeed : normspeed;
+            speed = isCrouching ? m_CrouchSpeed : aimspeed;
+
+           
+
             m_Input = new Vector2(horizontal, vertical);
 
             // normalize input if it exceeds 1 in combined length:

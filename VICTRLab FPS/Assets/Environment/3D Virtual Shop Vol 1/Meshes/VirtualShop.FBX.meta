@@ -108,6 +108,7 @@ ModelImporter:
     100204: Barrier_009
     100206: Glass_007
     100208: Glass_008
+    100210: Barrier_010
     400000: //RootNode
     400002: Body01
     400004: HP03
@@ -213,6 +214,7 @@ ModelImporter:
     400204: Barrier_009
     400206: Glass_007
     400208: Glass_008
+    400210: Barrier_010
     2300000: Body01
     2300002: HP03
     2300004: Plane14
@@ -315,6 +317,7 @@ ModelImporter:
     2300198: Barrier_009
     2300200: Glass_007
     2300202: Glass_008
+    2300204: Barrier_010
     3300000: Body01
     3300002: HP03
     3300004: Plane14
@@ -417,6 +420,7 @@ ModelImporter:
     3300198: Barrier_009
     3300200: Glass_007
     3300202: Glass_008
+    3300204: Barrier_010
     4300000: Plafond
     4300002: Glass_01
     4300004: Barrier_01
@@ -518,6 +522,7 @@ ModelImporter:
     4300196: Glass_008
     4300198: Barrier_008
     4300200: Barrier_009
+    4300202: Barrier_010
     7400000: Take 001
     11100000: //RootNode
   externalObjects:
