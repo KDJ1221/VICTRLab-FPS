@@ -1,12 +1,13 @@
 ﻿
 using UnityEngine;
+using System.Collections;
 
 public class GunFire : MonoBehaviour {
 
-    public float damage = 10f;
-    public float range = 100f;
-    public float fireRate = 15f;
-    public float impactForce = 30f;
+    public float damage;
+    public float range;
+    public float fireRate;
+    public float impactForce;
 
     public Camera fpsCam;
     //public ParticleSystem muzzleFlash;
@@ -16,27 +17,31 @@ public class GunFire : MonoBehaviour {
 
     public GameObject impactEffect;
 
-    private float nextTimeToFire = 0f;
-    
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetButtonDown("Fire1")&& Time.time >= nextTimeToFire) {
-            AudioSource gunsound = GetComponent<AudioSource>();
-            gunsound.Play();
-            GetComponent<Animation>().Play("GunShot");
+    private float nextTimeToFire = 0.0F;
+    AudioSource gunSound;
+    WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
 
-            nextTimeToFire = Time.time + 1f / fireRate;
-            Shoot();
+    void Start() {
+        gunSound = GetComponent<AudioSource>();
+    }
+
+    // Update is called once per frame
+    void Update() {
+        if(GlobalAmmo.LoadedAmmo >= 1) {
+            if(Input.GetButtonDown("Fire1") && Time.time > nextTimeToFire) {
+                nextTimeToFire = Time.time + fireRate;
+                StartCoroutine(Fire());
+                Shoot();
+            }
         }
+        Debug.Log(nextTimeToFire);
+    }
 
-        }
-        public void Shoot(){
-
-           // muzzleFlash.Play();
-
-            RaycastHit hit;
-            if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
-                Debug.Log(hit.transform.name);
+    public void Shoot() {
+        // muzzleFlash.Play();
+        RaycastHit hit;
+        if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
+            Debug.Log(hit.transform.name);
             Target target = hit.transform.GetComponent<Target>();
             if(target != null) {
                 target.TakeDamage(damage);
@@ -45,13 +50,19 @@ public class GunFire : MonoBehaviour {
             if(hit.rigidbody != null) {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-
-            }
+        }
 
         GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
         Destroy(impactGO, 2f);
         muzzle1.SetActive(true);
         muzzle2.SetActive(true);
+    }
 
-        }
-	}
+    public IEnumerator Fire() {
+        GlobalAmmo.LoadedAmmo -= 1;
+        //AudioSource gunsound = GetComponent<AudioSource>();
+        gunSound.Play();
+        GetComponent<Animation>().Play("GunShot");
+        yield return shotDuration;
+    }
+}
