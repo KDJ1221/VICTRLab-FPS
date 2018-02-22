@@ -2,33 +2,31 @@ Initialize engine version: 5.6.1f1 (2860b30f0b54)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce GTX 960M (ID=0x139b)
-    Vendor:   NVIDIA
-    VRAM:     3072 MB
-    Driver:   22.21.13.8205
+    Renderer: Intel(R) HD Graphics 4000 (ID=0x166)
+    Vendor:   Intel
+    VRAM:     2085 MB
+    Driver:   8.951.9.1000
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
-Loading C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.201 seconds
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\MJ\Desktop\Projects\VICTRLab-FPS\VICTRLab FPS\VirtualShopScene_Data\Managed\System.dll (this message is harmless)
-desktop: 3840x2160 60Hz; virtual: 3840x2160 at 0,0
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.353 seconds
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Jeffrey\Documents\GitHub\VICTRLab-FPS\VICTRLAB FPS\VirtualShopScene_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.863900 ms
-Setting up 4 worker threads for Enlighten.
-  Thread -> id: 3654 -> priority: 1 
-  Thread -> id: 2c68 -> priority: 1 
-  Thread -> id: 2548 -> priority: 1 
-  Thread -> id: 39d8 -> priority: 1 
+UnloadTime: 53.528324 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 1da8 -> priority: 1 
+  Thread -> id: 3390 -> priority: 1 
