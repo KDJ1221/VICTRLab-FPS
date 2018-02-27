@@ -16,6 +16,7 @@ public class GunFire : MonoBehaviour {
     public GameObject muzzle2;
 
     public GameObject impactEffect;
+    public GameObject bloodEffect;
 
     private float nextTimeToFire = 0.0F;
     AudioSource gunSound;
@@ -52,8 +53,14 @@ public class GunFire : MonoBehaviour {
             }
         }
 
-        GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-        Destroy(impactGO, 2f);
+        if(hit.transform.tag == "Enemy") {
+            GameObject impactGO = Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGO, 0.3f);
+        }
+        else {
+            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGO, 2f);
+        }
         muzzle1.SetActive(true);
         muzzle2.SetActive(true);
     }
