@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 34f6a0a2bdeaf4ee89c57f3da7ac0ba2, type: 3}
   m_Sun: {fileID: 2066719676}
-  m_IndirectSpecularColor: {r: 0.45121825, g: 0.4999535, b: 0.5682693, a: 1}
+  m_IndirectSpecularColor: {r: 0.4512186, g: 0.49995404, b: 0.5682699, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -740,10 +740,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1103671130}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &10654234
 LODGroup:
   m_ObjectHideFlags: 0
@@ -812,7 +808,7 @@ Transform:
   - {fileID: 1817665721}
   - {fileID: 37006117}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &12159546
 GameObject:
@@ -2024,6 +2020,11 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
   m_PrefabInternal: {fileID: 826581598}
+--- !u!20 &38611398 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2000000, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 2}
+  m_PrefabInternal: {fileID: 826581598}
 --- !u!114 &38611399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2035,6 +2036,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34f3be723b7d574b88248c5ed72fdaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  signatureColor: {r: 1, g: 0, b: 0.5, a: 1}
+  list:
+  - cam: {fileID: 38611396}
+    deleteQuestion: 0
+    hotkey: 11
+  foldoutSettings: 0
+  customName: 
+  customDirectory: 
+  lastCamID: 0
+  lastCam: {fileID: 38611398}
+  includeCamName: 1
+  includeDate: 1
+  includeResolution: 1
+  fileType: 0
+  captureMethod: 0
+  singleCamera: 1
+  renderSizeMultiplier: 1
+  captureSizeMultiplier: 1
+  cutoutPosition: {x: 0, y: 0}
+  cutoutSize: {x: 0, y: 0}
+  applicationPath: 0
 --- !u!1 &39638420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4421,7 +4443,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -5382,34 +5404,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0049421303, y: -0.0043676533, z: -0.079580605}
     m_Extent: {x: 0.037251316, y: 0.024494728, z: 0.007931814}
   m_DirtyAABB: 0
---- !u!1 &131180493
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 1301183928}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 131180494}
-  m_Layer: 0
-  m_Name: Missing Prefab
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &131180494
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 1301183928}
-  m_GameObject: {fileID: 131180493}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &131186396
 Prefab:
   m_ObjectHideFlags: 0
@@ -10330,7 +10324,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 27
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -15662,10 +15656,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1863344707}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &389588324
 LODGroup:
   m_ObjectHideFlags: 0
@@ -15734,7 +15724,7 @@ Transform:
   - {fileID: 1340894894}
   - {fileID: 737130873}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &392214909
 Prefab:
@@ -16492,7 +16482,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -22466,10 +22456,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1700679295}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &576880530
 LODGroup:
   m_ObjectHideFlags: 0
@@ -22538,7 +22524,7 @@ Transform:
   - {fileID: 1590398382}
   - {fileID: 2146084152}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &580316052
 GameObject:
@@ -22767,7 +22753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &591800745
 GameObject:
@@ -27350,10 +27336,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1307694918}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &748575731
 LODGroup:
   m_ObjectHideFlags: 0
@@ -27422,7 +27404,7 @@ Transform:
   - {fileID: 433684164}
   - {fileID: 2075506787}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &749379648
 GameObject:
@@ -29768,7 +29750,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 81559614088533646, guid: 5e9e851c0e142814dac026a256ba2ac0,
         type: 2}
@@ -31859,10 +31841,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 997278325}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &889453668
 LODGroup:
   m_ObjectHideFlags: 0
@@ -31931,7 +31909,7 @@ Transform:
   - {fileID: 1365590358}
   - {fileID: 172048844}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &890732178
 GameObject:
@@ -32770,10 +32748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1220162610}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &917218316
 LODGroup:
   m_ObjectHideFlags: 0
@@ -32842,7 +32816,7 @@ Transform:
   - {fileID: 1902816517}
   - {fileID: 1348088832}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &917856347
 Prefab:
@@ -33222,10 +33196,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1050661922}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &931028137
 LODGroup:
   m_ObjectHideFlags: 0
@@ -33294,7 +33264,7 @@ Transform:
   - {fileID: 72123739}
   - {fileID: 1224678992}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &931769949
 GameObject:
@@ -34097,7 +34067,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -36903,7 +36873,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -37115,7 +37085,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -37980,10 +37950,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   LeaveAmmo: {fileID: 451704889}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &1070091890
 LODGroup:
   m_ObjectHideFlags: 0
@@ -42224,7 +42190,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -44329,10 +44295,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   LeaveAmmo: {fileID: 1236331754}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &1276518745
 LODGroup:
   m_ObjectHideFlags: 0
@@ -50587,10 +50549,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 37061076}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &1493047237
 LODGroup:
   m_ObjectHideFlags: 0
@@ -50659,7 +50617,7 @@ Transform:
   - {fileID: 28727728}
   - {fileID: 1585884048}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &1495059355
 Prefab:
@@ -51072,7 +51030,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -54436,10 +54394,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1723794131}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &1605688199
 LODGroup:
   m_ObjectHideFlags: 0
@@ -54508,7 +54462,7 @@ Transform:
   - {fileID: 1587128984}
   - {fileID: 1128587020}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1606266417
 GameObject:
@@ -57035,7 +56989,7 @@ Transform:
   - {fileID: 1927617350}
   - {fileID: 1961417167}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 84.924, z: 0}
 --- !u!114 &1668863210
 MonoBehaviour:
@@ -57050,10 +57004,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1958489731}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!136 &1668863211
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -58596,10 +58546,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   LeaveAmmo: {fileID: 1380507992}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &1709932853
 LODGroup:
   m_ObjectHideFlags: 0
@@ -58668,7 +58614,7 @@ Transform:
   - {fileID: 1585482618}
   - {fileID: 2036844427}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1711983804
 GameObject:
@@ -62437,7 +62383,7 @@ Transform:
   - {fileID: 893353069}
   - {fileID: 2142137086}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805208156
 GameObject:
@@ -62629,10 +62575,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   LeaveAmmo: {fileID: 1390081187}
-  whichBlood: 0
-  Blood: {fileID: 0}
-  fallDownPos: {x: 0, y: 0, z: 0}
-  fallDownRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!205 &1809526031
 LODGroup:
   m_ObjectHideFlags: 0
@@ -62701,7 +62643,7 @@ Transform:
   - {fileID: 845852903}
   - {fileID: 229227532}
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1810253126
 Prefab:
@@ -64846,7 +64788,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 25
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -66784,7 +66726,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -67515,7 +67457,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -67986,7 +67928,7 @@ RectTransform:
   - {fileID: 680993133}
   - {fileID: 14096349}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -72027,7 +71969,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 29
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
@@ -73292,7 +73234,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4067461258059902, guid: f0a6dce53ef5e5d44899e0b4d2311a0f, type: 2}
       propertyPath: m_LocalScale.x
