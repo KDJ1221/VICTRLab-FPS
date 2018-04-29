@@ -14048,7 +14048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dca9a86fe422a54a8581f659a224024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolWaiting: 0
+  patrolWaiting: 1
   totalWaitTime: 3
   switchProbablity: 0.2
   patrolPoints:
@@ -14063,7 +14063,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -14075,6 +14075,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1306864669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1306864665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22688c39be1fe7e408557e0a77a6237c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {fileID: 0}
 --- !u!1001 &1308013375
 Prefab:
   m_ObjectHideFlags: 0
