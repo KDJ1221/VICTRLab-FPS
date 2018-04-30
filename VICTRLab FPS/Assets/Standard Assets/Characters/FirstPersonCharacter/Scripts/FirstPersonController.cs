@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -28,7 +29,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        //[SerializeField] private GameObject m_Gun;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -43,10 +43,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-        //private AimDownSights aimScript;
         private Crouch crouchScript;
         public bool isCrouching;
-        public bool isAiming; 
+        public bool isAiming;
+        public bool isMoving;
+        public bool finishStep;
+        public GameObject UpCurs;
+        public GameObject DownCurs;
+        public GameObject LeftCurs;
+        public GameObject RightCurs;
+        public GameObject HealthDisplay;
+        public int playerHealth;
+        float rdm;
+        Vector3 deltaY = new Vector3(0, 10.0f, 0);
+        Vector3 deltaX = new Vector3(10.0f, 0, 0);
 
         // Use this for initialization
         private void Start()
@@ -63,9 +73,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , m_Camera.transform);
             isCrouching = false;
             isAiming = false;
-            //aimScript = m_Gun.GetComponent<AimDownSights>();
+            isMoving = false;
+            finishStep = true;
             crouchScript = gameObject.GetComponent<Crouch>();
-
+            playerHealth = int.Parse(HealthDisplay.GetComponent<Text>().text);
         }
 
 
@@ -73,6 +84,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
             RotateView();
+
+            playerHealth = int.Parse(HealthDisplay.GetComponent<Text>().text);
 
             if (Input.GetKeyDown(KeyCode.C))
             {
@@ -82,12 +95,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (Input.GetMouseButtonDown(1))
             {
                 isAiming = true;
-                //aimScript.Aim();
             }
             else if (Input.GetMouseButtonUp(1))
             {
                 isAiming = false;
-                //aimScript.StopAim();
             }
 
             // the jump state needs to read here to make sure it is not missed
@@ -124,9 +135,39 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             float speed;
             GetInput(out speed);
+            if(playerHealth < 30) {
+                if(finishStep == true) {
+                    finishStep = false;
+                    rdm = Random.value;
+                }
+                Debug.Log(rdm);
+                if(m_Input.y == 0 && m_Input.x != 0) {
+                    if(rdm > 0.50) {
+                        m_Input.y = 0.29563534f;
+                    }
+                    else if(rdm < 0.50) {
+                        m_Input.y = -0.29563534f;
+                    }
+                }
+                else if(m_Input.x == 0 && m_Input.y != 0) {
+                    if(rdm > 0.50) {
+                        m_Input.x = 0.29563534f;
+                    }
+                    else if(rdm < 0.50) {
+                        m_Input.x = -0.29563534f;
+                    }
+                }
+            }
             // always move along the camera forward as it is the direction that it being aimed at
             Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
-
+            /*if(m_Input.y != 0 || m_Input.x != 0) {
+                Debug.Log("Input.y");
+                Debug.Log(m_Input.y);
+                Debug.Log("Input.x");
+                Debug.Log(m_Input.x);
+                Debug.Log("input");
+                Debug.Log(m_Input);
+            }*/
             // get a normal for the surface that is being touched to move along it
             RaycastHit hitInfo;
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
@@ -171,12 +212,27 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void ProgressStepCycle(float speed)
         {
-            if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
-            {
-                m_StepCycle += (m_CharacterController.velocity.magnitude + (speed*(m_IsWalking ? 1f : m_RunstepLenghten)))*
+            if(m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0)) {
+                m_StepCycle += (m_CharacterController.velocity.magnitude + (speed * (m_IsWalking ? 1f : m_RunstepLenghten))) *
                              Time.fixedDeltaTime;
+                if(!isMoving) {
+                    isMoving = true;
+                    UpCurs.transform.position += deltaY;
+                    DownCurs.transform.position -= deltaY;
+                    LeftCurs.transform.position -= deltaX;
+                    RightCurs.transform.position += deltaX;
+                }
             }
-
+            else {
+                if(isMoving) {
+                    isMoving = false;
+                    UpCurs.transform.position -= deltaY;
+                    DownCurs.transform.position += deltaY;
+                    LeftCurs.transform.position += deltaX;
+                    RightCurs.transform.position -= deltaX;
+                }
+            }
+            //finishStep = true;
             if (!(m_StepCycle > m_NextStep))
             {
                 return;
@@ -202,6 +258,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // move picked sound to index 0 so it's not picked next time
             m_FootstepSounds[n] = m_FootstepSounds[0];
             m_FootstepSounds[0] = m_AudioSource.clip;
+            finishStep = true;
         }
 
 

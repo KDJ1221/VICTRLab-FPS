@@ -8,6 +8,7 @@ public class AimDownSights : MonoBehaviour {
     public Vector3 hipFire;
     public float aimspeed = 0;
     public bool isAiming = false;
+    public bool isWalking = false;
     public GameObject UpCurs;
     public GameObject DownCurs;
     public GameObject LeftCurs;
@@ -29,7 +30,6 @@ public class AimDownSights : MonoBehaviour {
 	}
 
     public void Aim() {
-        //transform.localPosition = Vector3.Slerp(transform.localPosition, aimDownSight, aimspeed * Time.deltaTime);
         if(!isAiming) {
             isAiming = true;
             UpCurs.transform.position -= deltaY;
