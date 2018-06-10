@@ -14037,7 +14037,7 @@ Prefab:
     - target: {fileID: 9569982, guid: 0e0b8753c08e55e4db426ed68de68a55, type: 2}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 1daef956f10e39b4f903072cf1e792c8, type: 2}
+      objectReference: {fileID: 9100000, guid: 263a5a2720d6eb14598cec2db2db87a5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e0b8753c08e55e4db426ed68de68a55, type: 2}
   m_IsPrefabParent: 0
@@ -14057,7 +14057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolWaiting: 1
-  totalWaitTime: 3
+  totalWaitTime: 2
   switchProbablity: 0.2
   patrolPoints:
   - {fileID: 1111314481}
