@@ -32,3 +32,10 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Data
+Level1Scene_Data/
+VirtualShop_Data/
+VirtualShopScene_Data/
+Test_Data/
+MainMenu_Data/

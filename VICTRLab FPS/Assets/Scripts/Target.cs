@@ -1,32 +1,48 @@
-﻿
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Target : MonoBehaviour {
 
     public float health = 50f;
     public GameObject LeaveAmmo;
-    public int whichBlood;
+    public GameObject HeldGun;
     public GameObject Blood;
-    public Vector3 fallDownPos;
-    public Quaternion fallDownRot;
+    public GameObject Chest;
+    public Follow followScript;
+    public bool isDead = false;
+    float waitDrop;
 
-    public void TakeDamage(float amount) {
-        health -= amount;
-        if(health <= 0) {
-            LeaveAmmo.SetActive(true);
-            Blood.SetActive(true);
-            //Die();
-            fallDown();
+    void Start() {
+        followScript = GetComponent<Follow>();
+    }
+
+    void Update() {
+        if(health <= 0 && !isDead) {
+            isDead = true;
+            waitDrop = followScript.Die();
+            StartCoroutine(AmmoAndBloodDrop());
         }
     }
 
-    void Die() {
-        Destroy(gameObject);
+    public void TakeDamage(float amount) {
+        health -= amount;
+        /*if(health <= 0 && !isDead) {
+            isDead = true;
+            LeaveAmmo.SetActive(true);
+            Blood.SetActive(true);
+            //Die();
+            followScript.Die();
+        }*/
     }
 
-    void fallDown() {
-        transform.position = fallDownPos;
-        transform.rotation = fallDownRot;
+    IEnumerator AmmoAndBloodDrop() {
+        yield return new WaitForSeconds(waitDrop);
+        Blood.transform.position = new Vector3(Chest.transform.position.x, Blood.transform.position.y, Chest.transform.position.z);
+        LeaveAmmo.transform.position = new Vector3(HeldGun.transform.position.x, LeaveAmmo.transform.position.y, HeldGun.transform.position.z);
+        HeldGun.SetActive(false);
+        LeaveAmmo.SetActive(true);
+        Blood.SetActive(true);
     }
 }
 
