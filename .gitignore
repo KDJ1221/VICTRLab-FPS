@@ -39,3 +39,10 @@ VirtualShop_Data/
 VirtualShopScene_Data/
 Test_Data/
 MainMenu_Data/
+
+[merge]
+tool = unityyamlmerge
+
+[mergetool "unityyamlmerge"]
+trustExitCode = false
+cmd = '<path to UnityYAMLMerge>' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
