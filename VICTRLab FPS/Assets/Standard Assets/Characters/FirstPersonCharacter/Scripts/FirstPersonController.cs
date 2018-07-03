@@ -140,7 +140,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     finishStep = false;
                     rdm = Random.value;
                 }
-                Debug.Log(rdm);
                 if(m_Input.y == 0 && m_Input.x != 0) {
                     if(rdm > 0.50) {
                         m_Input.y = 0.29563534f;

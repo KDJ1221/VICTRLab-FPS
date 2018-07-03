@@ -9,7 +9,7 @@ public class GlobalAmmo : MonoBehaviour {
     public int InternalAmmo;
     public GameObject AmmoDisplay;
 
-    public static int LoadedAmmo = 10;
+    public static int LoadedAmmo = 20;
     public int InternalLoaded;
     public GameObject LoadedDisplay;
 	
