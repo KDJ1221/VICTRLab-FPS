@@ -13,6 +13,7 @@ public class Follow : MonoBehaviour {
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
     bool isSquat = false;
+    bool canShoot = false;
     public bool CharacterTypeSquat;
     bool similarHeight = false;
     float t;
@@ -77,9 +78,22 @@ public class Follow : MonoBehaviour {
         isSquat = false;
     }
 
+    public IEnumerator GunCoolDown()
+    {
+        yield return new WaitForSeconds(2.5f);
+        canShoot = true;
+    }
+
     public void ChangeState() {
         if(isSquat) {
             anim.SetBool("isIdle", true);
+            if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
+                Vector3 direction = Player.position - this.transform.position;
+                if (direction.magnitude > 0) {
+                    anim.SetBool("isShooting", true);
+                    anim.SetBool("isIdle", false);
+                }
+            }
             anim.SetBool("isCrouch", false);
             StartCoroutine(WaitNoSquat());
         }
@@ -93,18 +107,24 @@ public class Follow : MonoBehaviour {
     }
 
     void Attack() {
+        Debug.Log(canShoot);
         RaycastHit rayHit;
         if(Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
             //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
             //Debug.Log(rayHit.transform.name);
             //rayHit.transform.SendMessage("DamagePlayer", damage, SendMessageOptions.DontRequireReceiver);
             PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
-            if(target != null) {
+            if(target != null && canShoot) {
+                canShoot = false;
                 float rdm = UnityEngine.Random.value;
-                float missPercent = (rayHit.distance + 50) / 100;
-                if(rdm > missPercent || rayHit.distance <= 5) {
+                float missPercent = (rayHit.distance + 70) / 100;
+                if(rdm > missPercent || rayHit.distance <= 1) {
                     target.TakeDamage(damage);
                 }
+            }
+            else {
+                Debug.Log("start coroutine");
+                StartCoroutine("GunCoolDown");
             }
         }
     }
