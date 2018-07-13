@@ -40,6 +40,8 @@ VirtualShopScene_Data/
 Test_Data/
 MainMenu_Data/
 
+db.lock
+
 [merge]
 tool = unityyamlmerge
 

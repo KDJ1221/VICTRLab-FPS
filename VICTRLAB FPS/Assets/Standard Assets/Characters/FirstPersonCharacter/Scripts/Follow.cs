@@ -9,7 +9,7 @@ public class Follow : MonoBehaviour {
     public Transform Player;
     public Vector3 newPosition;
     public Vector3 origPosition;
-    private float damage = 0.5f;
+    private static float damage = 0.5f;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
     bool isSquat = false;
@@ -18,18 +18,16 @@ public class Follow : MonoBehaviour {
     bool similarHeight = false;
     float t;
     float rdm;
-    public float speed = -0.000001f;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         anim = GetComponent<Animator>();
         rdm = UnityEngine.Random.Range(10, 20);
         t = Time.time + rdm;
-        
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if(Math.Abs(Player.position.y - this.transform.position.y) <= 4.5) {
             if(Time.time > t && CharacterTypeSquat) {
                 ChangeState();
@@ -107,8 +105,9 @@ public class Follow : MonoBehaviour {
     }
 
     void Attack() {
-        Debug.Log(canShoot);
+        //Debug.Log(canShoot);
         RaycastHit rayHit;
+
         if(Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
             //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
             //Debug.Log(rayHit.transform.name);
@@ -123,10 +122,20 @@ public class Follow : MonoBehaviour {
                 }
             }
             else {
-                Debug.Log("start coroutine");
+                //Debug.Log("start coroutine");
                 StartCoroutine("GunCoolDown");
             }
         }
     }
-    
+
+    public void ChangeDamage(string change) {
+        if (change.Equals("raise")) {
+            damage += 0.1f;
+            Debug.Log(damage);
+        }
+        else if (change.Equals("reset")) {
+            damage = 0.5f;
+            Debug.Log(damage);
+        }
+    }
 }  

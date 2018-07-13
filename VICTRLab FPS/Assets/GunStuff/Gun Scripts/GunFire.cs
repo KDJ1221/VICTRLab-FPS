@@ -72,8 +72,8 @@ public class GunFire : MonoBehaviour {
         // muzzleFlash.Play();
         RaycastHit hit;
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
-            Debug.Log(hit.transform.name);
-            Debug.Log(hit.distance);
+            //Debug.Log(hit.transform.name);
+            //Debug.Log(hit.distance);
             if(CursObj.transform.position.y < 267.5) {
                 missConstant = 5;
             }

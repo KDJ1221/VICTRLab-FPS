@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Target : MonoBehaviour {
 
+    public static int enemyCount = 6;
     public float health = 50f;
     public GameObject LeaveAmmo;
     public GameObject HeldGun;
@@ -22,6 +23,9 @@ public class Target : MonoBehaviour {
             isDead = true;
             waitDrop = followScript.Die();
             StartCoroutine(AmmoAndBloodDrop());
+            enemyCount--;
+            followScript.ChangeDamage("raise");
+            Debug.Log(enemyCount);
         }
     }
 
@@ -43,6 +47,10 @@ public class Target : MonoBehaviour {
         HeldGun.SetActive(false);
         LeaveAmmo.SetActive(true);
         Blood.SetActive(true);
+    }
+
+    public int GetCount() {
+        return enemyCount;
     }
 }
 
