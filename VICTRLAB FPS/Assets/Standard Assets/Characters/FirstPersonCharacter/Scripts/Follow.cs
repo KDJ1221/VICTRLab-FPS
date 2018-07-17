@@ -10,12 +10,14 @@ public class Follow : MonoBehaviour {
     public Vector3 newPosition;
     public Vector3 origPosition;
     private static float damage = 0.5f;
+    private int ammo = 10;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
     bool isSquat = false;
+    bool reload = false;
     bool canShoot = false;
     public bool CharacterTypeSquat;
-    bool similarHeight = false;
+    public bool CharacterTypeReload;
     float t;
     float rdm;
 
@@ -30,31 +32,42 @@ public class Follow : MonoBehaviour {
     void Update () {
         if(Math.Abs(Player.position.y - this.transform.position.y) <= 4.5) {
             if(Time.time > t && CharacterTypeSquat) {
-                ChangeState();
+                ChangeState("Squat");
                 rdm = UnityEngine.Random.Range(10, 20);
                 t = Time.time + rdm;
             }
-            if(Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
-                Vector3 direction = Player.position - this.transform.position;
-                direction.y = 0;
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
-                anim.SetBool("isIdle", false);
-                anim.SetBool("isCrouch", false);
-                anim.SetBool("isWalking", false);
 
-                if(direction.magnitude > 0) {
-                    anim.SetBool("isShooting", true);
+            if (reload) {
+                reload = false;
+                Debug.Log(ammo);
+                ChangeState("Reload");
+                ammo = 10;
+                Debug.Log(ammo);
+            }
+
+            if(Math.Abs(Player.position.x - this.transform.position.x) < 25) {
+                if (!isDead && !isSquat && !reload) {
+                    Vector3 direction = Player.position - this.transform.position;
+                    direction.y = 0;
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                     anim.SetBool("isIdle", false);
-                    float rdm = UnityEngine.Random.Range(5, 10);
-                    //Debug.Log(isSquat);
-                    //Squat(rdm);
-                    Attack();
+                    anim.SetBool("isCrouch", false);
+                    anim.SetBool("isWalking", false);
 
+                    if (direction.magnitude > 0) {
+                        anim.SetBool("isShooting", true);
+                        anim.SetBool("isIdle", false);
+                        Attack();
+
+                    }
+                    else {
+                        //anim.SetBool("isIdle", true);
+                        anim.SetBool("isShooting", true);
+                    }
                 }
-                else {
-                    //anim.SetBool("isIdle", true);
-                    anim.SetBool("isShooting", true);
-                }
+            }
+            else {
+                anim.SetBool("isIdle", true);
             }
         }
     }
@@ -82,25 +95,43 @@ public class Follow : MonoBehaviour {
         canShoot = true;
     }
 
-    public void ChangeState() {
-        if(isSquat) {
-            anim.SetBool("isIdle", true);
-            if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
-                Vector3 direction = Player.position - this.transform.position;
-                if (direction.magnitude > 0) {
-                    anim.SetBool("isShooting", true);
-                    anim.SetBool("isIdle", false);
+    public IEnumerator WaitReload() {
+        yield return new WaitForSeconds(2.0f);
+        reload = true;
+    }
+
+    public void ChangeState(string s) {
+        if (s.Equals("Squat")) {
+            if (isSquat) {
+                anim.SetBool("isStand", true);
+                if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
+                    Vector3 direction = Player.position - this.transform.position;
+                    if (direction.magnitude > 0) {
+                        anim.SetBool("isStand", false);
+                        anim.SetBool("isIdle", false);
+                        anim.SetBool("isShooting", true);
+                    }
+                    else {
+                        anim.SetBool("isStand", false);
+                        anim.SetBool("isShooting", false);
+                        anim.SetBool("isIdle", true);
+                    }
                 }
+                anim.SetBool("isCrouch", false);
+                StartCoroutine(WaitNoSquat());
             }
-            anim.SetBool("isCrouch", false);
-            StartCoroutine(WaitNoSquat());
+            else {
+                isSquat = true;
+                anim.SetBool("isShooting", false);
+                anim.SetBool("isIdle", false);
+                anim.SetBool("isWalking", false);
+                anim.SetBool("isStand", false);
+                anim.SetBool("isCrouch", true);
+            }
         }
-        else {
-            isSquat = true;
-            anim.SetBool("isShooting", false);
-            anim.SetBool("isIdle", false);
-            anim.SetBool("isWalking", false);
-            anim.SetBool("isCrouch", true);
+        else if (s.Equals("Reload")) {
+            anim.SetBool("isReload", false);
+            anim.SetBool("isShooting", true);
         }
     }
 
@@ -117,8 +148,17 @@ public class Follow : MonoBehaviour {
                 canShoot = false;
                 float rdm = UnityEngine.Random.value;
                 float missPercent = (rayHit.distance + 70) / 100;
-                if(rdm > missPercent || rayHit.distance <= 1) {
+                if((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
                     target.TakeDamage(damage);
+                    if (CharacterTypeReload) {
+                        ammo--;
+                        if (ammo <= 0) {
+                            anim.SetBool("isShooting", false);
+                            anim.SetBool("isReload", true);
+                            StartCoroutine(WaitReload());
+                            Debug.Log(reload);
+                        }
+                    }
                 }
             }
             else {
