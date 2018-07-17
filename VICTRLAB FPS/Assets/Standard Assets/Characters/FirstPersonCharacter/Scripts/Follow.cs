@@ -134,7 +134,7 @@ public class Follow : MonoBehaviour {
             Debug.Log(damage);
         }
         else if (change.Equals("reset")) {
-            damage = 0.5f;
+            wwwdamage = 0.5f;
             Debug.Log(damage);
         }
     }
