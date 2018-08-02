@@ -10,15 +10,18 @@ public class PlayerHealth : MonoBehaviour {
     double splatterOpacity_2 = 0;
     double splatterOpacity_3 = 0;
     double splatterOpacity_4 = 0;
+    double splatterOpacity_5 = 0;
     public GameObject HealthDisplay;
     public RawImage bloodColor_1;
     public RawImage bloodColor_2;
     public RawImage bloodColor_3;
     public RawImage bloodColor_4;
+    public RawImage bloodColor_5;
     public RawImage bloodSplatter_1;
     public RawImage bloodSplatter_2;
     public RawImage bloodSplatter_3;
     public RawImage bloodSplatter_4;
+    public RawImage bloodSplatter_5;
 
     // Update is called once per frame
     void Update () {
@@ -40,29 +43,38 @@ public class PlayerHealth : MonoBehaviour {
         if(splatterOpacity_4 > 0) {
             splatterOpacity_4 -= 0.2;
         }
+        if(splatterOpacity_5 > 0) {
+            splatterOpacity_5 -= 5;
+        }
+        else if (splatterOpacity_5 <= 0) {
+            splatterOpacity_5 = 0;
+        }
 
         HealthDisplay.GetComponent<Text>().text = "" + (int) playerHealth;
         Color color;
-        Color colorSplatter_1, colorSplatter_2, colorSplatter_3, colorSplatter_4;
+        Color colorSplatter_1, colorSplatter_2, colorSplatter_3, colorSplatter_4, colorSplatter_5;
         color = new Color32(0, 0, 0, (byte) bloodOpacity);
         colorSplatter_1 = new Color32(0, 0, 0, (byte) splatterOpacity_1);
         colorSplatter_2 = new Color32(0, 0, 0, (byte) splatterOpacity_2);
         colorSplatter_3 = new Color32(0, 0, 0, (byte) splatterOpacity_3);
         colorSplatter_4 = new Color32(0, 0, 0, (byte) splatterOpacity_4);
+        colorSplatter_5 = new Color32(0, 0, 0, (byte) splatterOpacity_5);
         bloodColor_1.color = new Color(bloodColor_1.color.r, bloodColor_1.color.g, bloodColor_1.color.b, color.a);
         bloodColor_2.color = new Color(bloodColor_2.color.r, bloodColor_2.color.g, bloodColor_2.color.b, color.a);
         bloodColor_3.color = new Color(bloodColor_3.color.r, bloodColor_3.color.g, bloodColor_3.color.b, color.a);
         bloodColor_4.color = new Color(bloodColor_4.color.r, bloodColor_4.color.g, bloodColor_4.color.b, color.a);
+        bloodColor_5.color = new Color(bloodColor_5.color.r, bloodColor_5.color.g, bloodColor_5.color.b, color.a);
         bloodSplatter_1.color = new Color(bloodSplatter_1.color.r, bloodSplatter_1.color.g, bloodSplatter_1.color.b, colorSplatter_1.a);
         bloodSplatter_2.color = new Color(bloodSplatter_2.color.r, bloodSplatter_2.color.g, bloodSplatter_2.color.b, colorSplatter_2.a);
         bloodSplatter_3.color = new Color(bloodSplatter_3.color.r, bloodSplatter_3.color.g, bloodSplatter_3.color.b, colorSplatter_3.a);
         bloodSplatter_4.color = new Color(bloodSplatter_4.color.r, bloodSplatter_4.color.g, bloodSplatter_4.color.b, colorSplatter_4.a);
-
+        bloodSplatter_5.color = new Color(bloodSplatter_5.color.r, bloodSplatter_5.color.g, bloodSplatter_5.color.b, colorSplatter_5.a);
     }
 
     public void TakeDamage(float amount) {
         playerHealth -= amount;
-        if(playerHealth < 0) {
+
+        if (playerHealth < 0) {
             playerHealth = 1;
         }
 
@@ -86,6 +98,9 @@ public class PlayerHealth : MonoBehaviour {
         }
         else if(playerHealth <= 70) {
             splatterOpacity_1 = 255;
+        }
+        else if(playerHealth < 100) {
+            splatterOpacity_5 = 255;
         }
         
         

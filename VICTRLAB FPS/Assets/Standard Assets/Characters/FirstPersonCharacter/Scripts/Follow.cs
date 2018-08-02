@@ -10,7 +10,7 @@ public class Follow : MonoBehaviour {
     public Vector3 newPosition;
     public Vector3 origPosition;
     private static float damage = 0.5f;
-    private int ammo = 10;
+    private int ammo = 30;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
     bool isSquat = false;
@@ -39,10 +39,10 @@ public class Follow : MonoBehaviour {
 
             if (reload) {
                 reload = false;
-                Debug.Log(ammo);
+                //Debug.Log(ammo);
                 ChangeState("Reload");
-                ammo = 10;
-                Debug.Log(ammo);
+                ammo = 60;
+                //Debug.Log(ammo);
             }
 
             if(Math.Abs(Player.position.x - this.transform.position.x) < 25) {
@@ -103,29 +103,25 @@ public class Follow : MonoBehaviour {
     public void ChangeState(string s) {
         if (s.Equals("Squat")) {
             if (isSquat) {
-                anim.SetBool("isStand", true);
                 if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
                     Vector3 direction = Player.position - this.transform.position;
                     if (direction.magnitude > 0) {
-                        anim.SetBool("isStand", false);
                         anim.SetBool("isIdle", false);
                         anim.SetBool("isShooting", true);
                     }
                     else {
-                        anim.SetBool("isStand", false);
                         anim.SetBool("isShooting", false);
                         anim.SetBool("isIdle", true);
                     }
                 }
                 anim.SetBool("isCrouch", false);
-                StartCoroutine(WaitNoSquat());
+                StartCoroutine("WaitNoSquat");
             }
             else {
                 isSquat = true;
                 anim.SetBool("isShooting", false);
                 anim.SetBool("isIdle", false);
                 anim.SetBool("isWalking", false);
-                anim.SetBool("isStand", false);
                 anim.SetBool("isCrouch", true);
             }
         }
@@ -155,8 +151,8 @@ public class Follow : MonoBehaviour {
                         if (ammo <= 0) {
                             anim.SetBool("isShooting", false);
                             anim.SetBool("isReload", true);
-                            StartCoroutine(WaitReload());
-                            Debug.Log(reload);
+                            StartCoroutine("WaitReload");
+                            //Debug.Log(reload);
                         }
                     }
                 }
@@ -171,11 +167,11 @@ public class Follow : MonoBehaviour {
     public void ChangeDamage(string change) {
         if (change.Equals("raise")) {
             damage += 0.1f;
-            Debug.Log(damage);
+            //Debug.Log(damage);
         }
         else if (change.Equals("reset")) {
-            wwwdamage = 0.5f;
-            Debug.Log(damage);
+            damage = 0.5f;
+            //Debug.Log(damage);
         }
     }
 }  

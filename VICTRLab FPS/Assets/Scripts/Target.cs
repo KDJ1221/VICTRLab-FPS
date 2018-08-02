@@ -13,9 +13,11 @@ public class Target : MonoBehaviour {
     public Follow followScript;
     public bool isDead = false;
     float waitDrop;
+    CapsuleCollider cc;
 
     void Start() {
         followScript = GetComponent<Follow>();
+        cc = GetComponent<CapsuleCollider>();
     }
 
     void Update() {
@@ -25,7 +27,7 @@ public class Target : MonoBehaviour {
             StartCoroutine(AmmoAndBloodDrop());
             enemyCount--;
             followScript.ChangeDamage("raise");
-            Debug.Log(enemyCount);
+            //Debug.Log(enemyCount);
         }
     }
 
@@ -43,8 +45,8 @@ public class Target : MonoBehaviour {
     IEnumerator AmmoAndBloodDrop() {
         yield return new WaitForSeconds(waitDrop);
         Blood.transform.position = new Vector3(Chest.transform.position.x, Blood.transform.position.y, Chest.transform.position.z);
-        LeaveAmmo.transform.position = new Vector3(HeldGun.transform.position.x, LeaveAmmo.transform.position.y, HeldGun.transform.position.z);
         HeldGun.SetActive(false);
+        cc.enabled = false;
         LeaveAmmo.SetActive(true);
         Blood.SetActive(true);
     }

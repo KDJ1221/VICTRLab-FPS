@@ -15,9 +15,7 @@ public class Reload : MonoBehaviour {
 
 	void Start () {
         GunComponent = GetComponent<GunFire>();
-#pragma warning disable CS0436 // Type conflicts with imported type
         aimScript = GetComponent<AimDownSights>();
-#pragma warning restore CS0436 // Type conflicts with imported type
     }
 	
 	// Update is called once per frame
@@ -28,7 +26,7 @@ public class Reload : MonoBehaviour {
             ReloadAvailable = 0;
         }
         else {
-            ReloadAvailable = 10 - ClipCount;
+            ReloadAvailable = 20 - ClipCount;
         }
 
         if(Input.GetButtonDown("Reload")) {
