@@ -20,56 +20,118 @@ public class Follow : MonoBehaviour {
     public bool CharacterTypeReload;
     float t;
     float rdm;
+    public Target targetScript;
+
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         anim = GetComponent<Animator>();
         rdm = UnityEngine.Random.Range(10, 20);
         t = Time.time + rdm;
+        targetScript = GetComponent<Target>();
     }
 
     // Update is called once per frame
     void Update () {
-        if(Math.Abs(Player.position.y - this.transform.position.y) <= 4.5) {
-            if(Time.time > t && CharacterTypeSquat) {
-                ChangeState("Squat");
-                rdm = UnityEngine.Random.Range(10, 20);
-                t = Time.time + rdm;
-            }
 
-            if (reload) {
-                reload = false;
-                //Debug.Log(ammo);
-                ChangeState("Reload");
-                ammo = 60;
-                //Debug.Log(ammo);
-            }
+        //Vector3 playerDir = Player.position - transform.position;
+        //Debug.Log("playerDir is " + playerDir);
+        //float angle = Vector3.Angle(playerDir, Player.transform.forward);
+        //Debug.Log("angle is " + angle);
+        //if (Mathf.Abs(angle) < 5.0f)
+        //{
+        //    anim.SetBool("isShooting", false);
+        //    anim.SetBool("isIdle", false);
+        //    anim.SetBool("isWalking", false);
+        //    anim.SetBool("isCrouch", true);
+        //    isSquat = true;
+        //    Debug.Log("I'm looking at the enemy so he should crouch");
+        //}
 
-            if(Math.Abs(Player.position.x - this.transform.position.x) < 25) {
-                if (!isDead && !isSquat && !reload) {
-                    Vector3 direction = Player.position - this.transform.position;
-                    direction.y = 0;
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
-                    anim.SetBool("isIdle", false);
-                    anim.SetBool("isCrouch", false);
-                    anim.SetBool("isWalking", false);
+        Vector3 forward = Player.transform.forward;
+        Vector3 toOther = (this.transform.position - Player.transform.position).normalized;
+        float check = Vector3.Dot(forward, toOther);
 
-                    if (direction.magnitude > 0) {
-                        anim.SetBool("isShooting", true);
+
+        if (check > 0.97f && targetScript.GetCount() > 3) //or less than 3 players
+        {
+            //Debug.Log("Facing the object" + check);
+            //ChangeState("Squat");
+            anim.SetBool("isCrouch", true);
+            anim.SetBool("isShooting", false);
+            anim.SetBool("isIdle", false);
+            anim.SetBool("isWalking", false);
+            isSquat = true;
+        }
+
+        else
+        {
+            //Debug.Log("Not facing the object" + check);
+
+            //Debug.Log("enemy count is " + targetScript.GetCount());
+            anim.SetBool("isCrouch", false);
+            //anim.SetBool("isShooting", true);
+            anim.SetBool("isIdle", false);
+            anim.SetBool("isWalking", false);
+            isSquat = false;
+            //Attack();
+
+            if (Math.Abs(Player.position.y - this.transform.position.y) <= 4.5)
+            {
+                //if (Time.time > t && CharacterTypeSquat)
+                //{
+                //    ChangeState("Squat");
+                //    rdm = UnityEngine.Random.Range(10, 20);
+                //    t = Time.time + rdm;
+                //}
+
+                if (reload)
+                {
+                    reload = false;
+                    //Debug.Log(ammo);
+                    ChangeState("Reload");
+                    ammo = 60;
+                    //Debug.Log(ammo);
+                }
+
+                if (Math.Abs(Player.position.x - this.transform.position.x) < 25)
+                {
+                    if (!isDead && !isSquat && !reload)
+                    {
+                        Vector3 direction = Player.position - this.transform.position;
+                        direction.y = 0;
+                        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                         anim.SetBool("isIdle", false);
-                        Attack();
+                        anim.SetBool("isCrouch", false);
+                        anim.SetBool("isWalking", false);
 
-                    }
-                    else {
-                        //anim.SetBool("isIdle", true);
-                        anim.SetBool("isShooting", true);
+                        if (direction.magnitude > 0)
+                        {
+                            anim.SetBool("isShooting", true);
+                            anim.SetBool("isIdle", false);
+                            Attack();
+
+                        }
+                        else
+                        {
+                            //anim.SetBool("isIdle", true);
+                            anim.SetBool("isShooting", true);
+                        }
                     }
                 }
-            }
-            else {
-                anim.SetBool("isIdle", true);
+                else
+                {
+                    anim.SetBool("isIdle", true);
+                }
             }
         }
+
+
+        //my work above
+
+
+        
     }
 
     public float Die() {

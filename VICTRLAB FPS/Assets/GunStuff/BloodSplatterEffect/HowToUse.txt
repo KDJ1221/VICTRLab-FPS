@@ -1,0 +1,19 @@
+1. Create an empty gameObject.
+
+2. Add the BloodSplatter.js or Blood_Splatter.cs script to the gameObject.
+
+3. Assign a blood texture to the "bloodTexture" variable slot.
+
+4. Feel free to tweak the start & end color.
+
+4. Set the duration of the splatter.
+
+5. Drag the gameObject to the Project tab so it becomes a prefab.
+
+6. Simply instantiate the prefab when you want a blood splatter effect.
+
+7. Have fun!
+
+
+For support, contact :
+ian.izzy94@gmail.com
