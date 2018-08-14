@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a5223157dbdfe2e46a07e105dac8697e
 ModelImporter:
-  serializedVersion: 23
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Barrier_01
     100002: Cavity_Wall
@@ -284,8 +284,6 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
