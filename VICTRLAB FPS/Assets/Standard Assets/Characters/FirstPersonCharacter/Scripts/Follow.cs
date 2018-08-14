@@ -145,6 +145,7 @@ public class Follow : MonoBehaviour {
                 float rdm = UnityEngine.Random.value;
                 float missPercent = (rayHit.distance + 70) / 100;
                 if((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
+                    target.DamageDirection(GetComponent<Transform>());
                     target.TakeDamage(damage);
                     if (CharacterTypeReload) {
                         ammo--;
