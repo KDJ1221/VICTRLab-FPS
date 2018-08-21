@@ -21,6 +21,8 @@ public class Follow : MonoBehaviour {
     float t;
     float rdm;
     public Target targetScript;
+    public CapsuleCollider cc;
+    private GameObject playerTarget;
 
     // Use this for initialization
     void Start() {
@@ -28,6 +30,8 @@ public class Follow : MonoBehaviour {
         rdm = UnityEngine.Random.Range(10, 20);
         t = Time.time + rdm;
         targetScript = GetComponent<Target>();
+        playerTarget = GameObject.FindGameObjectWithTag("Player");
+        cc = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -60,6 +64,7 @@ public class Follow : MonoBehaviour {
             anim.SetBool("isShooting", false);
             anim.SetBool("isIdle", false);
             anim.SetBool("isWalking", false);
+            cc.height = 1f;
             isSquat = true;
         }
 
@@ -71,6 +76,7 @@ public class Follow : MonoBehaviour {
             //anim.SetBool("isShooting", true);
             anim.SetBool("isIdle", false);
             anim.SetBool("isWalking", false);
+            cc.height = 2f;
             isSquat = false;
             //Attack();
 
@@ -188,28 +194,30 @@ public class Follow : MonoBehaviour {
             //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
             //Debug.Log(rayHit.transform.name);
             //rayHit.transform.SendMessage("DamagePlayer", damage, SendMessageOptions.DontRequireReceiver);
-            PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
-            if(target != null && canShoot) {
-                canShoot = false;
-                float rdm = UnityEngine.Random.value;
-                float missPercent = (rayHit.distance + 70) / 100;
-                if((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
-                    target.DamageDirection(GetComponent<Transform>());
-                    target.TakeDamage(damage);
-                    if (CharacterTypeReload) {
-                        ammo--;
-                        if (ammo <= 0) {
-                            anim.SetBool("isShooting", false);
-                            anim.SetBool("isReload", true);
-                            StartCoroutine("WaitReload");
-                            //Debug.Log(reload);
+            if (rayHit.transform.gameObject == playerTarget) {
+                PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
+                if (target != null && canShoot) {
+                    canShoot = false;
+                    float rdm = UnityEngine.Random.value;
+                    float missPercent = (rayHit.distance + 70) / 100;
+                    if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
+                        target.DamageDirection(GetComponent<Transform>());
+                        target.TakeDamage(damage);
+                        if (CharacterTypeReload) {
+                            ammo--;
+                            if (ammo <= 0) {
+                                anim.SetBool("isShooting", false);
+                                anim.SetBool("isReload", true);
+                                StartCoroutine("WaitReload");
+                                //Debug.Log(reload);
+                            }
                         }
                     }
                 }
-            }
-            else {
-                //Debug.Log("start coroutine");
-                StartCoroutine("GunCoolDown");
+                else {
+                    //Debug.Log("start coroutine");
+                    StartCoroutine("GunCoolDown");
+                }
             }
         }
     }
