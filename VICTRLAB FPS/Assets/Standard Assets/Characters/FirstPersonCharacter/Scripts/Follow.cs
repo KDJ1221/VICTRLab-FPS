@@ -74,7 +74,7 @@ public class Follow : MonoBehaviour {
             isSquat = false;
             //Attack();
 
-            if (Math.Abs(Player.position.y - this.transform.position.y) <= 4.5) {
+            if (Math.Abs(Player.position.y - this.transform.position.y) <= 15) {
                 //if (Time.time > t && CharacterTypeSquat)
                 //{
                 //    ChangeState("Squat");
@@ -93,7 +93,7 @@ public class Follow : MonoBehaviour {
                 if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
                     if (!isDead && !isSquat && !reload) {
                         Vector3 direction = Player.position - this.transform.position;
-                        direction.y = 0;
+                        //direction.y = 0;
                         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                         anim.SetBool("isIdle", false);
                         anim.SetBool("isCrouch", false);
