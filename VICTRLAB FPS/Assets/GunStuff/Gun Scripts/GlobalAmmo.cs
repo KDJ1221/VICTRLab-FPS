@@ -20,4 +20,17 @@ public class GlobalAmmo : MonoBehaviour {
         AmmoDisplay.GetComponent<Text> ().text = "" + InternalAmmo;
         LoadedDisplay.GetComponent<Text>().text = "" + InternalLoaded;
 	}
+
+    public void resetAmmo(int iA, int iL) {
+        CurrentAmmo = iL;
+        LoadedAmmo = iA;
+    }
+
+    public int getLoadedAmmo() {
+        return LoadedAmmo;
+    }
+
+    public int getCurrentAmmo() {
+        return CurrentAmmo;
+    }
 }

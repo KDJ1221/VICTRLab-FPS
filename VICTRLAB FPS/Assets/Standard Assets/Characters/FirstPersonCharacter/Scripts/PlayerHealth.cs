@@ -29,28 +29,28 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     void Update () {
-        if(playerHealth < 100) {
+        if(playerHealth < 100 && Time.timeScale == 1) {
             playerHealth += 0.05;
         }
-        if(bloodOpacity > 0) {
+        if(bloodOpacity > 0 && Time.timeScale == 1) {
             bloodOpacity -= 0.2;
         }
-        if(splatterOpacity_1 > 0) {
+        if(splatterOpacity_1 > 0 && Time.timeScale == 1) {
             splatterOpacity_1 -= 0.8;
         }
-        if(splatterOpacity_2 > 0) {
+        if(splatterOpacity_2 > 0 && Time.timeScale == 1) {
             splatterOpacity_2 -= 0.6;
         }
-        if(splatterOpacity_3 > 0) {
+        if(splatterOpacity_3 > 0 && Time.timeScale == 1) {
             splatterOpacity_3 -= 0.4;
         }
-        if(splatterOpacity_4 > 0) {
+        if(splatterOpacity_4 > 0 && Time.timeScale == 1) {
             splatterOpacity_4 -= 0.2;
         }
-        if(DamageOpacity > 0) {
+        if(DamageOpacity > 0 && Time.timeScale == 1) {
             DamageOpacity -= 5;
         }
-        else if (DamageOpacity <= 0) {
+        else if (DamageOpacity <= 0 && Time.timeScale == 1) {
             DamageOpacity = 0;
         }
 

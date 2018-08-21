@@ -8,6 +8,9 @@ public class MenuController : MonoBehaviour {
 
     public string mainMenuScene;
     public string checkpointScene;
+    public GameObject AmmoObject;
+    public int StartingAmmo;
+    public int ReserveAmmo;
     public GameObject Player;
     public GameObject Gun; 
     public GameObject pauseMenu;
@@ -18,6 +21,8 @@ public class MenuController : MonoBehaviour {
         isPaused = false;
         pauseMenu.SetActive(false);
         Cursor.visible = false;
+        StartingAmmo = AmmoObject.GetComponent<GlobalAmmo>().getLoadedAmmo();
+        ReserveAmmo = AmmoObject.GetComponent<GlobalAmmo>().getCurrentAmmo();
     }
 	
 	// Update is called once per frame
@@ -49,6 +54,7 @@ public class MenuController : MonoBehaviour {
 
     public void ReturnToCheckpoint() {
         Time.timeScale = 1f;
+        AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(StartingAmmo, ReserveAmmo);
         SceneManager.LoadScene(checkpointScene);
     }
 
