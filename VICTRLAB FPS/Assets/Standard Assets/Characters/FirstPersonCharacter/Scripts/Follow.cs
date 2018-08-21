@@ -21,6 +21,7 @@ public class Follow : MonoBehaviour {
     float t;
     float rdm;
     public Target targetScript;
+    Vector3 direction;
 
     // Use this for initialization
     void Start() {
@@ -92,7 +93,7 @@ public class Follow : MonoBehaviour {
 
                 if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
                     if (!isDead && !isSquat && !reload) {
-                        Vector3 direction = Player.position - this.transform.position;
+                        direction = Player.position - this.transform.position;
                         //direction.y = 0;
                         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                         anim.SetBool("isIdle", false);
@@ -127,7 +128,8 @@ public class Follow : MonoBehaviour {
         anim.SetBool("isShooting", false);
         anim.SetBool("isDead", true);
         isDead = true;
-        if(isSquat) {
+        direction.y = 0;
+        if (isSquat) {
             return 2.5f;
         }
         return 4.0f;
