@@ -10,7 +10,7 @@ public class Follow : MonoBehaviour {
     public Vector3 newPosition;
     public Vector3 origPosition;
     private static float damage = 0.5f;
-    private int ammo = 30;
+    public int ammo;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
     bool isSquat = false;
@@ -23,7 +23,9 @@ public class Follow : MonoBehaviour {
     public Target targetScript;
     public CapsuleCollider cc;
     private GameObject playerTarget;
-    Vector3 direction;
+    public Vector3 direction;
+    RaycastHit rayHit;
+
 
     // Use this for initialization
     void Start() {
@@ -33,6 +35,7 @@ public class Follow : MonoBehaviour {
         targetScript = GetComponent<Target>();
         playerTarget = GameObject.FindGameObjectWithTag("Player");
         cc = GetComponent<CapsuleCollider>();
+        ammo = UnityEngine.Random.Range(1, 15);
     }
 
     // Update is called once per frame
@@ -55,9 +58,12 @@ public class Follow : MonoBehaviour {
         Vector3 forward = Player.transform.forward;
         Vector3 toOther = (this.transform.position - Player.transform.position).normalized;
         float check = Vector3.Dot(forward, toOther);
+        float distance = Vector3.Distance(Player.position, this.transform.position);
+        //Debug.Log("The distance is: " + distance);
+        //Debug.Log(ammo);
 
-
-        if (check > 0.97f && targetScript.GetCount() > 3) //or less than 3 players
+        if (check > 0.97f && targetScript.GetCount() > 3 && distance > 3) //or less than 3 players
+                                                                          // && !Physics.Linecast(forward, this.transform.position)
         {
             //Debug.Log("Facing the object" + check);
             //ChangeState("Squat");
@@ -100,7 +106,7 @@ public class Follow : MonoBehaviour {
                 if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
                     if (!isDead && !isSquat && !reload) {
                         direction = Player.position - this.transform.position;
-                        //direction.y = 0;
+                        direction.y = 0;
                         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                         anim.SetBool("isIdle", false);
                         anim.SetBool("isCrouch", false);
@@ -134,7 +140,6 @@ public class Follow : MonoBehaviour {
         anim.SetBool("isShooting", false);
         anim.SetBool("isDead", true);
         isDead = true;
-        direction.y = 0;
         if (isSquat) {
             return 2.5f;
         }
@@ -190,7 +195,6 @@ public class Follow : MonoBehaviour {
 
     void Attack() {
         //Debug.Log(canShoot);
-        RaycastHit rayHit;
 
         if(Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
             //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
@@ -226,7 +230,7 @@ public class Follow : MonoBehaviour {
 
     public void ChangeDamage(string change) {
         if (change.Equals("raise")) {
-            damage += 0.1f;
+            damage += 1.0f;
             //Debug.Log(damage);
         }
         else if (change.Equals("reset")) {
