@@ -64,6 +64,7 @@ public class Target : MonoBehaviour
 
     public void ResetCount() {
         enemyCount = 6;
+        followScript.ammo = UnityEngine.Random.Range(1, 15);
         followScript.ChangeDamage("reset");
     }
 }
