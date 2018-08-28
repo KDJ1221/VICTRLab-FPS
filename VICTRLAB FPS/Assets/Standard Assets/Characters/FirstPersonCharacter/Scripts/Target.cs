@@ -61,4 +61,9 @@ public class Target : MonoBehaviour
     public int GetCount() {
         return enemyCount;
     }
+
+    public void ResetCount() {
+        enemyCount = 6;
+        followScript.ChangeDamage("reset");
+    }
 }

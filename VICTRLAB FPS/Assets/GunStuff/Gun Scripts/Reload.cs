@@ -30,20 +30,27 @@ public class Reload : MonoBehaviour {
         }
 
         if(Input.GetButtonDown("Reload")) {
-            if(ReloadAvailable >= 1) {
-                if(ReserveCount <= ReloadAvailable) {
-                    GlobalAmmo.LoadedAmmo += ReserveCount;
-                    GlobalAmmo.CurrentAmmo -= ReserveCount;
-                }
-                else {
-                    GlobalAmmo.LoadedAmmo += ReloadAvailable;
-                    GlobalAmmo.CurrentAmmo -= ReloadAvailable;
-                }
-                ActionReload();
-            }
-            StartCoroutine(EnableScripts());
+            beginReload("Reload");
+        }
+        else if (ClipCount == 0 && ReserveCount > 0) {
+            beginReload("Reload_Slower");
         }
 	}
+
+    void beginReload(string s) {
+        if (ReloadAvailable >= 1) {
+            if (ReserveCount <= ReloadAvailable) {
+                GlobalAmmo.LoadedAmmo += ReserveCount;
+                GlobalAmmo.CurrentAmmo -= ReserveCount;
+            }
+            else {
+                GlobalAmmo.LoadedAmmo += ReloadAvailable;
+                GlobalAmmo.CurrentAmmo -= ReloadAvailable;
+            }
+            ReloadAnimation(s);
+        }
+        StartCoroutine(EnableScripts());
+    }
 
     IEnumerator EnableScripts() {
         yield return new WaitForSeconds(1.1f);
@@ -54,13 +61,13 @@ public class Reload : MonoBehaviour {
         //MechanicsObject.SetActive(true);
     }
 
-    void ActionReload() {
+    void ReloadAnimation(string s) {
         GunComponent.enabled = false;
         aimScript.StopAim();
         aimScript.enabled = false;
         //CrossObject.SetActive(false);
         //MechanicsObject.SetActive(false);
         ReloadSound.Play();
-        GetComponent<Animation>().Play("Reload");
+        GetComponent<Animation>().Play(s);
     }
 }

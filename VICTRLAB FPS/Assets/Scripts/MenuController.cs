@@ -12,7 +12,8 @@ public class MenuController : MonoBehaviour {
     public int StartingAmmo;
     public int ReserveAmmo;
     public GameObject Player;
-    public GameObject Gun; 
+    public GameObject Gun;
+    public GameObject Enemy;
     public GameObject pauseMenu;
     public static bool isPaused;
 
@@ -55,12 +56,14 @@ public class MenuController : MonoBehaviour {
     public void ReturnToCheckpoint() {
         Time.timeScale = 1f;
         AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(StartingAmmo, ReserveAmmo);
+        Enemy.GetComponent<Target>().ResetCount();
         SceneManager.LoadScene(checkpointScene);
     }
 
     public void ReturnToMain() {
         Time.timeScale = 1f;
         AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(20, 0);
+        Enemy.GetComponent<Target>().ResetCount();
         SceneManager.LoadScene(mainMenuScene);
     }
 

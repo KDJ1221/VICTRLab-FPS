@@ -81,7 +81,7 @@ public class Follow : MonoBehaviour {
             isSquat = false;
             //Attack();
 
-            if (Math.Abs(Player.position.y - this.transform.position.y) <= 15) {
+            if (Math.Abs(Player.position.y - this.transform.position.y) <= 5) {
                 //if (Time.time > t && CharacterTypeSquat)
                 //{
                 //    ChangeState("Squat");
