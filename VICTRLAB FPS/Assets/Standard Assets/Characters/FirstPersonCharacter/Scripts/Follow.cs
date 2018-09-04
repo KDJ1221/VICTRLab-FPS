@@ -70,64 +70,67 @@ public class Follow : MonoBehaviour
             //Debug.Log(ammo);
         }
 
-        if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget) {
-            anim.SetBool("isCrouch", true);
-            anim.SetBool("isShooting", false);
-            anim.SetBool("isIdle", false);
-            cc.height = 1f;
-            isSquat = true;
-        }
+        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
+            if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget) {
+                anim.SetBool("isCrouch", true);
+                anim.SetBool("isShooting", false);
+                anim.SetBool("isIdle", false);
+                cc.height = 1f;
+                isSquat = true;
+            }
 
-        else {
-            //Debug.Log("Not facing the object" + check);
 
-            //Debug.Log("enemy count is " + targetScript.GetCount());
-            anim.SetBool("isCrouch", false);
-            //anim.SetBool("isShooting", true);
-            anim.SetBool("isIdle", false);
-            cc.height = 2f;
-            isSquat = false;
-            //Attack();
+            else {
+                //Debug.Log("Not facing the object" + check);
 
-            if (Math.Abs(Player.position.y - this.transform.position.y) <= 5) {
-                //if (Time.time > t && CharacterTypeSquat)
-                //{
-                //    ChangeState("Squat");
-                //    rdm = UnityEngine.Random.Range(10, 20);
-                //    t = Time.time + rdm;
-                //}
-                if (Math.Abs(Player.position.y - this.transform.position.y) > 1 && !enemyOnStairs) {
-                    enemyOnStairs = true;
-                    damage += 0.5f;
-                }
-                else if (Math.Abs(Player.position.y - this.transform.position.y) <= 1 && enemyOnStairs) {
-                    enemyOnStairs = false;
-                    damage -= 0.5f;
-                }
+                //Debug.Log("enemy count is " + targetScript.GetCount());
+                anim.SetBool("isCrouch", false);
+                //anim.SetBool("isShooting", true);
+                anim.SetBool("isIdle", false);
+                cc.height = 2f;
+                isSquat = false;
+                //Attack();
 
-                if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
-                    if (!isDead && !isSquat && !reload) {
-                        direction = Player.position - this.transform.position;
-                        if (Math.Abs(Player.position.y - this.transform.position.y) <= 1)
-                            direction.y = 0;
-                        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
-                        anim.SetBool("isIdle", false);
-                        anim.SetBool("isCrouch", false);
+                if (Math.Abs(Player.position.y - this.transform.position.y) <= 5) {
+                    //if (Time.time > t && CharacterTypeSquat)
+                    //{
+                    //    ChangeState("Squat");
+                    //    rdm = UnityEngine.Random.Range(10, 20);
+                    //    t = Time.time + rdm;
+                    //}
+                    if (Math.Abs(Player.position.y - this.transform.position.y) > 1 && !enemyOnStairs) {
+                        enemyOnStairs = true;
+                        damage += 0.5f;
+                    }
+                    else if (Math.Abs(Player.position.y - this.transform.position.y) <= 1 && enemyOnStairs) {
+                        enemyOnStairs = false;
+                        damage -= 0.5f;
+                    }
 
-                        if (direction.magnitude > 0) {
-                            anim.SetBool("isShooting", true);
+                    if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
+                        if (!isDead && !isSquat && !reload) {
+                            direction = Player.position - this.transform.position;
+                            if (Math.Abs(Player.position.y - this.transform.position.y) <= 1)
+                                direction.y = 0;
+                            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                             anim.SetBool("isIdle", false);
-                            Attack();
+                            anim.SetBool("isCrouch", false);
 
-                        }
-                        else {
-                            //anim.SetBool("isIdle", true);
-                            anim.SetBool("isShooting", true);
+                            if (direction.magnitude > 0) {
+                                anim.SetBool("isShooting", true);
+                                anim.SetBool("isIdle", false);
+                                Attack();
+
+                            }
+                            else {
+                                //anim.SetBool("isIdle", true);
+                                anim.SetBool("isShooting", true);
+                            }
                         }
                     }
-                }
-                else {
-                    anim.SetBool("isIdle", true);
+                    else {
+                        anim.SetBool("isIdle", true);
+                    }
                 }
             }
         }
@@ -201,7 +204,7 @@ public class Follow : MonoBehaviour
     void Attack() {
         //Debug.Log(canShoot);
 
-        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
+        //if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
             //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
             //Debug.Log(rayHit.transform.name);
             //rayHit.transform.SendMessage("DamagePlayer", damage, SendMessageOptions.DontRequireReceiver);
@@ -230,7 +233,7 @@ public class Follow : MonoBehaviour
                     StartCoroutine("GunCoolDown");
                 }
             }
-        }
+        //}
     }
 
     public void ChangeDamage(string change) {
