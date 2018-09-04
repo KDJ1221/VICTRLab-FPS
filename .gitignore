@@ -43,6 +43,7 @@ MainMenu_Data/
 
 db.lock
 ProjectVersion.txt
+GameBuild.rar
 
 [merge]
 tool = unityyamlmerge

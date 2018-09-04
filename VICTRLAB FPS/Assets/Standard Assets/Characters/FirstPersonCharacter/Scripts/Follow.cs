@@ -17,6 +17,7 @@ public class Follow : MonoBehaviour
     bool isSquat = false;
     bool reload = false;
     bool canShoot = false;
+    private static bool enemyOnStairs = false;
     public bool CharacterTypeSquat;
     public bool CharacterTypeReload;
     float t;
@@ -29,8 +30,7 @@ public class Follow : MonoBehaviour
 
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         anim = GetComponent<Animator>();
         rdm = UnityEngine.Random.Range(10, 20);
         t = Time.time + rdm;
@@ -41,9 +41,7 @@ public class Follow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
+    void Update() {
         //Vector3 playerDir = Player.position - transform.position;
         //Debug.Log("playerDir is " + playerDir);
         //float angle = Vector3.Angle(playerDir, Player.transform.forward);
@@ -52,7 +50,6 @@ public class Follow : MonoBehaviour
         //{
         //    anim.SetBool("isShooting", false);
         //    anim.SetBool("isIdle", false);
-        //    anim.SetBool("isWalking", false);
         //    anim.SetBool("isCrouch", true);
         //    isSquat = true;
         //    Debug.Log("I'm looking at the enemy so he should crouch");
@@ -65,131 +62,122 @@ public class Follow : MonoBehaviour
         //Debug.Log("The distance is: " + distance);
         //Debug.Log(ammo);
 
-        if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget)
-        {
+        if (reload) {
+            reload = false;
+            //Debug.Log(ammo);
+            ChangeState("Reload");
+            ammo = 60;
+            //Debug.Log(ammo);
+        }
+
+        if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget) {
             anim.SetBool("isCrouch", true);
             anim.SetBool("isShooting", false);
             anim.SetBool("isIdle", false);
-            anim.SetBool("isWalking", false);
             cc.height = 1f;
             isSquat = true;
         }
 
-        else
-        {
+        else {
             //Debug.Log("Not facing the object" + check);
 
             //Debug.Log("enemy count is " + targetScript.GetCount());
             anim.SetBool("isCrouch", false);
             //anim.SetBool("isShooting", true);
             anim.SetBool("isIdle", false);
-            anim.SetBool("isWalking", false);
             cc.height = 2f;
             isSquat = false;
             //Attack();
 
-            if (Math.Abs(Player.position.y - this.transform.position.y) <= 5)
-            {
+            if (Math.Abs(Player.position.y - this.transform.position.y) <= 5) {
                 //if (Time.time > t && CharacterTypeSquat)
                 //{
                 //    ChangeState("Squat");
                 //    rdm = UnityEngine.Random.Range(10, 20);
                 //    t = Time.time + rdm;
                 //}
-
-                if (reload)
-                {
-                    reload = false;
-                    //Debug.Log(ammo);
-                    ChangeState("Reload");
-                    ammo = 60;
-                    //Debug.Log(ammo);
+                if (Math.Abs(Player.position.y - this.transform.position.y) > 1 && !enemyOnStairs) {
+                    enemyOnStairs = true;
+                    damage += 0.5f;
+                }
+                else if (Math.Abs(Player.position.y - this.transform.position.y) <= 1 && enemyOnStairs) {
+                    enemyOnStairs = false;
+                    damage -= 0.5f;
                 }
 
-                if (Math.Abs(Player.position.x - this.transform.position.x) < 25)
-                {
-                    if (!isDead && !isSquat && !reload)
-                    {
+                if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
+                    if (!isDead && !isSquat && !reload) {
                         direction = Player.position - this.transform.position;
-                        direction.y = 0;
+                        if (Math.Abs(Player.position.y - this.transform.position.y) <= 1)
+                            direction.y = 0;
                         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                         anim.SetBool("isIdle", false);
                         anim.SetBool("isCrouch", false);
-                        anim.SetBool("isWalking", false);
 
-                        if (direction.magnitude > 0)
-                        {
+                        if (direction.magnitude > 0) {
                             anim.SetBool("isShooting", true);
                             anim.SetBool("isIdle", false);
                             Attack();
 
                         }
-                        else
-                        {
+                        else {
                             //anim.SetBool("isIdle", true);
                             anim.SetBool("isShooting", true);
                         }
                     }
                 }
-                else
-                {
+                else {
                     anim.SetBool("isIdle", true);
                 }
             }
+        }
+        if (isDead) {
+            direction.y = 0;
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
         }
     }
 
 
     //my work above
 
-    public float Die()
-    {
+    public float Die() {
         anim.SetBool("isDead", false);
         anim.SetBool("isIdle", false);
         anim.SetBool("isShooting", false);
+        anim.SetBool("isReload", false);
         anim.SetBool("isDead", true);
         isDead = true;
-        if (isSquat)
-        {
+        if (isSquat) {
             return 2.5f;
         }
         return 4.0f;
     }
 
-    public IEnumerator WaitNoSquat()
-    {
+    public IEnumerator WaitNoSquat() {
         yield return new WaitForSeconds(2.0f + rdm);
         isSquat = false;
     }
 
-    public IEnumerator GunCoolDown()
-    {
+    public IEnumerator GunCoolDown() {
         yield return new WaitForSeconds(2.5f);
         canShoot = true;
     }
 
-    public IEnumerator WaitReload()
-    {
+    public IEnumerator WaitReload() {
         yield return new WaitForSeconds(2.0f);
         reload = true;
     }
 
-    public void ChangeState(string s)
-    {
-        if (s.Equals("Squat"))
-        {
-            if (isSquat)
-            {
-                if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat)
-                {
+    public void ChangeState(string s) {
+        if (s.Equals("Squat")) {
+            if (isSquat) {
+                if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
                     Vector3 direction = Player.position - this.transform.position;
-                    if (direction.magnitude > 0)
-                    {
+                    if (direction.magnitude > 0) {
                         anim.SetBool("isIdle", false);
                         anim.SetBool("isShooting", true);
                     }
-                    else
-                    {
+                    else {
                         anim.SetBool("isShooting", false);
                         anim.SetBool("isIdle", true);
                     }
@@ -197,48 +185,38 @@ public class Follow : MonoBehaviour
                 anim.SetBool("isCrouch", false);
                 StartCoroutine("WaitNoSquat");
             }
-            else
-            {
+            else {
                 isSquat = true;
                 anim.SetBool("isShooting", false);
                 anim.SetBool("isIdle", false);
-                anim.SetBool("isWalking", false);
                 anim.SetBool("isCrouch", true);
             }
         }
-        else if (s.Equals("Reload"))
-        {
+        else if (s.Equals("Reload")) {
             anim.SetBool("isReload", false);
             anim.SetBool("isShooting", true);
         }
     }
 
-    void Attack()
-    {
+    void Attack() {
         //Debug.Log(canShoot);
 
-        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100))
-        {
+        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
             //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
             //Debug.Log(rayHit.transform.name);
             //rayHit.transform.SendMessage("DamagePlayer", damage, SendMessageOptions.DontRequireReceiver);
-            if (rayHit.transform.gameObject == playerTarget)
-            {
+            if (rayHit.transform.gameObject == playerTarget) {
                 PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
-                if (target != null && canShoot)
-                {
+                if (target != null && canShoot) {
                     canShoot = false;
                     float rdm = UnityEngine.Random.value;
                     float missPercent = (rayHit.distance + 70) / 100;
-                    if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0)
-                    {
+                    if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
                         target.DamageDirection(GetComponent<Transform>());
                         target.TakeDamage(damage);
-                        if (CharacterTypeReload)
-                        {
+                        if (CharacterTypeReload) {
                             ammo--;
-                            if (ammo <= 0)
-                            {
+                            if (ammo <= 0) {
                                 anim.SetBool("isShooting", false);
                                 anim.SetBool("isReload", true);
                                 StartCoroutine("WaitReload");
@@ -247,8 +225,7 @@ public class Follow : MonoBehaviour
                         }
                     }
                 }
-                else
-                {
+                else {
                     //Debug.Log("start coroutine");
                     StartCoroutine("GunCoolDown");
                 }
@@ -256,15 +233,11 @@ public class Follow : MonoBehaviour
         }
     }
 
-    public void ChangeDamage(string change)
-    {
-        if (change.Equals("raise"))
-        {
+    public void ChangeDamage(string change) {
+        if (change.Equals("raise")) {
             damage += 1.0f;
-            //Debug.Log(damage);
         }
-        else if (change.Equals("reset"))
-        {
+        else if (change.Equals("reset")) {
             damage = 0.5f;
             //Debug.Log(damage);
         }
