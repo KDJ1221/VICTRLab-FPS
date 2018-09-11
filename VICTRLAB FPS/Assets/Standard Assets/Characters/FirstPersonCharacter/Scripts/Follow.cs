@@ -75,7 +75,7 @@ public class Follow : MonoBehaviour
                 anim.SetBool("isCrouch", true);
                 anim.SetBool("isShooting", false);
                 anim.SetBool("isIdle", false);
-                cc.height = 1f;
+                cc.height = 0.5f;
                 isSquat = true;
             }
 

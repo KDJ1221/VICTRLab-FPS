@@ -62,7 +62,7 @@ public class MenuController : MonoBehaviour {
 
     public void ReturnToMain() {
         Time.timeScale = 1f;
-        AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(20, 0);
+        AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(0, 0);
         Enemy.GetComponent<Target>().ResetCount();
         SceneManager.LoadScene(mainMenuScene);
     }

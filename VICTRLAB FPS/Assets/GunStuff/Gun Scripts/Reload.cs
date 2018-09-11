@@ -26,7 +26,7 @@ public class Reload : MonoBehaviour {
             ReloadAvailable = 0;
         }
         else {
-            ReloadAvailable = 20 - ClipCount;
+            ReloadAvailable = 10 - ClipCount;
         }
 
         if(Input.GetButtonDown("Reload")) {
