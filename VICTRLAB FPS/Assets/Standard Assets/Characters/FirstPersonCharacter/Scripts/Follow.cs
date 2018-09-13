@@ -10,7 +10,7 @@ public class Follow : MonoBehaviour
     public Transform Player;
     public Vector3 newPosition;
     public Vector3 origPosition;
-    private static float damage = 0.5f;
+    private static float damage = 0.7f;
     public int ammo;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
@@ -22,6 +22,7 @@ public class Follow : MonoBehaviour
     public bool CharacterTypeReload;
     float t;
     float rdm;
+    float shootTime;
     public Target targetScript;
     public CapsuleCollider cc;
     private GameObject playerTarget;
@@ -33,6 +34,7 @@ public class Follow : MonoBehaviour
     void Start() {
         anim = GetComponent<Animator>();
         rdm = UnityEngine.Random.Range(10, 20);
+        shootTime = UnityEngine.Random.Range(0, 2);
         t = Time.time + rdm;
         targetScript = GetComponent<Target>();
         playerTarget = GameObject.FindGameObjectWithTag("Player");
@@ -115,6 +117,7 @@ public class Follow : MonoBehaviour
                             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                             anim.SetBool("isIdle", false);
                             anim.SetBool("isCrouch", false);
+                            StartCoroutine("StartShoot");
 
                             if (direction.magnitude > 0) {
                                 anim.SetBool("isShooting", true);
@@ -169,6 +172,10 @@ public class Follow : MonoBehaviour
     public IEnumerator WaitReload() {
         yield return new WaitForSeconds(2.0f);
         reload = true;
+    }
+
+    public IEnumerator StartShoot() {
+        yield return new WaitForSeconds(shootTime);
     }
 
     public void ChangeState(string s) {
@@ -241,7 +248,7 @@ public class Follow : MonoBehaviour
             damage += 1.0f;
         }
         else if (change.Equals("reset")) {
-            damage = 0.5f;
+            damage = 0.7f;
             //Debug.Log(damage);
         }
     }
