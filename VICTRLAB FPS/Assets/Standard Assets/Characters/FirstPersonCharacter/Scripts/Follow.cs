@@ -34,7 +34,7 @@ public class Follow : MonoBehaviour
     void Start() {
         anim = GetComponent<Animator>();
         rdm = UnityEngine.Random.Range(10, 20);
-        shootTime = UnityEngine.Random.Range(0, 2);
+        shootTime = UnityEngine.Random.Range(0, 5);
         t = Time.time + rdm;
         targetScript = GetComponent<Target>();
         playerTarget = GameObject.FindGameObjectWithTag("Player");
@@ -108,7 +108,7 @@ public class Follow : MonoBehaviour
                         enemyOnStairs = false;
                         damage -= 0.5f;
                     }
-
+                    StartCoroutine("StartShoot");
                     if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
                         if (!isDead && !isSquat && !reload) {
                             direction = Player.position - this.transform.position;
@@ -117,7 +117,6 @@ public class Follow : MonoBehaviour
                             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                             anim.SetBool("isIdle", false);
                             anim.SetBool("isCrouch", false);
-                            StartCoroutine("StartShoot");
 
                             if (direction.magnitude > 0) {
                                 anim.SetBool("isShooting", true);

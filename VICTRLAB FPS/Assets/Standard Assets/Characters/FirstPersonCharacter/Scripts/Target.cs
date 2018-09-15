@@ -6,6 +6,8 @@ public class Target : MonoBehaviour
 {
 
     public static int enemyCount = 6;
+    public static int totalCount;
+    public int totalInspector;
     public float health = 50f;
     public GameObject LeaveAmmo;
     public GameObject HeldGun;
@@ -19,6 +21,7 @@ public class Target : MonoBehaviour
     void Start() {
         followScript = GetComponent<Follow>();
         cc = GetComponent<CapsuleCollider>();
+        totalCount = totalInspector;
     }
 
     void Update() {
@@ -27,6 +30,7 @@ public class Target : MonoBehaviour
             waitDrop = followScript.Die();
             StartCoroutine(AmmoAndBloodDrop());
             enemyCount--;
+            totalCount--;
             if (enemyCount <= 0) {
                 enemyCount = 6;
                 followScript.ChangeDamage("reset");
@@ -66,5 +70,9 @@ public class Target : MonoBehaviour
         enemyCount = 6;
         followScript.ammo = UnityEngine.Random.Range(1, 15);
         followScript.ChangeDamage("reset");
+    }
+
+    public int GetTotalCount() {
+        return totalCount;
     }
 }
