@@ -17,11 +17,10 @@ public class Follow : MonoBehaviour
     bool isSquat = false;
     bool reload = false;
     bool canShoot = false;
+    bool beginShoot = false;
     private static bool enemyOnStairs = false;
-    public bool CharacterTypeSquat;
-    public bool CharacterTypeReload;
     float t;
-    float rdm;
+    //float rdm;
     float shootTime;
     public Target targetScript;
     public CapsuleCollider cc;
@@ -33,13 +32,13 @@ public class Follow : MonoBehaviour
     // Use this for initialization
     void Start() {
         anim = GetComponent<Animator>();
-        rdm = UnityEngine.Random.Range(10, 20);
-        shootTime = UnityEngine.Random.Range(0, 5);
-        t = Time.time + rdm;
+        //rdm = UnityEngine.Random.Range(10, 20);
+        shootTime = UnityEngine.Random.Range(0, 3);
+        //t = Time.time + rdm;
         targetScript = GetComponent<Target>();
         playerTarget = GameObject.FindGameObjectWithTag("Player");
         cc = GetComponent<CapsuleCollider>();
-        ammo = UnityEngine.Random.Range(1, 15);
+        ammo = 15;
     }
 
     // Update is called once per frame
@@ -72,7 +71,7 @@ public class Follow : MonoBehaviour
             //Debug.Log(ammo);
         }
 
-        if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
+        else if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
             if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget) {
                 anim.SetBool("isCrouch", true);
                 anim.SetBool("isShooting", false);
@@ -94,12 +93,6 @@ public class Follow : MonoBehaviour
                 //Attack();
 
                 if (Math.Abs(Player.position.y - this.transform.position.y) <= 5) {
-                    //if (Time.time > t && CharacterTypeSquat)
-                    //{
-                    //    ChangeState("Squat");
-                    //    rdm = UnityEngine.Random.Range(10, 20);
-                    //    t = Time.time + rdm;
-                    //}
                     if (Math.Abs(Player.position.y - this.transform.position.y) > 1 && !enemyOnStairs) {
                         enemyOnStairs = true;
                         damage += 0.5f;
@@ -110,7 +103,7 @@ public class Follow : MonoBehaviour
                     }
                     StartCoroutine("StartShoot");
                     if (Math.Abs(Player.position.x - this.transform.position.x) < 25) {
-                        if (!isDead && !isSquat && !reload) {
+                        if (!isDead && beginShoot) {
                             direction = Player.position - this.transform.position;
                             if (Math.Abs(Player.position.y - this.transform.position.y) <= 1)
                                 direction.y = 0;
@@ -146,7 +139,7 @@ public class Follow : MonoBehaviour
     //my work above
 
     public float Die() {
-        anim.SetBool("isDead", false);
+        anim.SetBool("isCrouch", false);
         anim.SetBool("isIdle", false);
         anim.SetBool("isShooting", false);
         anim.SetBool("isReload", false);
@@ -158,10 +151,10 @@ public class Follow : MonoBehaviour
         return 4.0f;
     }
 
-    public IEnumerator WaitNoSquat() {
+    /*public IEnumerator WaitNoSquat() {
         yield return new WaitForSeconds(2.0f + rdm);
         isSquat = false;
-    }
+    }*/
 
     public IEnumerator GunCoolDown() {
         yield return new WaitForSeconds(2.5f);
@@ -175,10 +168,11 @@ public class Follow : MonoBehaviour
 
     public IEnumerator StartShoot() {
         yield return new WaitForSeconds(shootTime);
+        beginShoot = true;
     }
 
     public void ChangeState(string s) {
-        if (s.Equals("Squat")) {
+        /*if (s.Equals("Squat")) {
             if (isSquat) {
                 if (Math.Abs(Player.position.x - this.transform.position.x) < 25 && !isDead && !isSquat) {
                     Vector3 direction = Player.position - this.transform.position;
@@ -200,8 +194,8 @@ public class Follow : MonoBehaviour
                 anim.SetBool("isIdle", false);
                 anim.SetBool("isCrouch", true);
             }
-        }
-        else if (s.Equals("Reload")) {
+        }*/
+        if (s.Equals("Reload")) {
             anim.SetBool("isReload", false);
             anim.SetBool("isShooting", true);
         }
@@ -223,14 +217,12 @@ public class Follow : MonoBehaviour
                     if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
                         target.DamageDirection(GetComponent<Transform>());
                         target.TakeDamage(damage);
-                        if (CharacterTypeReload) {
-                            ammo--;
-                            if (ammo <= 0) {
-                                anim.SetBool("isShooting", false);
-                                anim.SetBool("isReload", true);
-                                StartCoroutine("WaitReload");
-                                //Debug.Log(reload);
-                            }
+                        ammo--;
+                        if (ammo <= 0) {
+                            anim.SetBool("isShooting", false);
+                            anim.SetBool("isReload", true);
+                            StartCoroutine("WaitReload");
+                            //Debug.Log(reload);
                         }
                     }
                 }
