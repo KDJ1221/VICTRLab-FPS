@@ -27,6 +27,7 @@ public class Follow : MonoBehaviour
     private GameObject playerTarget;
     public Vector3 direction;
     RaycastHit rayHit;
+    AudioSource enemysound;
 
 
     // Use this for initialization
@@ -39,6 +40,7 @@ public class Follow : MonoBehaviour
         playerTarget = GameObject.FindGameObjectWithTag("Player");
         cc = GetComponent<CapsuleCollider>();
         ammo = 15;
+        enemysound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -211,6 +213,7 @@ public class Follow : MonoBehaviour
             if (rayHit.transform.gameObject == playerTarget) {
                 PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
                 if (target != null && canShoot) {
+                    GetComponent<AudioSource>().Play();
                     canShoot = false;
                     float rdm = UnityEngine.Random.value;
                     float missPercent = (rayHit.distance + 70) / 100;
