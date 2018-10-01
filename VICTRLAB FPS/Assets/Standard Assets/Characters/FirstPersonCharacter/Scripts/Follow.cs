@@ -11,6 +11,7 @@ public class Follow : MonoBehaviour
     public Vector3 newPosition;
     public Vector3 origPosition;
     private static float damage = 0.7f;
+    private float bossDamage = 2.0f;
     public int ammo;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
@@ -28,6 +29,7 @@ public class Follow : MonoBehaviour
     public Vector3 direction;
     RaycastHit rayHit;
     AudioSource enemysound;
+    public bool isBoss;
 
 
     // Use this for initialization
@@ -218,8 +220,13 @@ public class Follow : MonoBehaviour
                     float rdm = UnityEngine.Random.value;
                     float missPercent = (rayHit.distance + 70) / 100;
                     if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
-                        target.DamageDirection(GetComponent<Transform>());
-                        target.TakeDamage(damage);
+                        target.DamageDirection(GetComponent<Transform>(), enemyOnStairs);
+                        if (isBoss) {
+                            target.TakeDamage(bossDamage);
+                        }
+                        else {
+                            target.TakeDamage(damage);
+                        }
                         ammo--;
                         if (ammo <= 0) {
                             anim.SetBool("isShooting", false);

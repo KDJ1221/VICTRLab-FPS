@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class PlayerHealth : MonoBehaviour {
     double playerHealth = 100;
@@ -113,13 +114,18 @@ public class PlayerHealth : MonoBehaviour {
 
     }
 
-    public void DamageDirection(Transform enemyTransform) {
+    public void DamageDirection(Transform enemyTransform, bool enemyOnStairs) {
         Vector3 direction = Camera.main.WorldToScreenPoint(enemyTransform.transform.position);
         Vector3 point = Vector3.zero;
 
         point.z = Mathf.Atan2((indicator.transform.position.y - direction.y), (indicator.transform.position.x - direction.x)) * Mathf.Rad2Deg - 90;
-
-        indicator.transform.rotation = Quaternion.Euler(point * -1);
+        
+        if (Math.Abs(point.z) < 90 || enemyOnStairs) {
+            indicator.transform.rotation = Quaternion.Euler(point * -1);
+        }
+        else {
+            indicator.transform.rotation = Quaternion.Euler(point);
+        }
     }
 
     /*private void OnTriggerEnter(Collider other) {
