@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour {
     public RawImage bloodSplatter_4;
     public RawImage DamageIndicator;
     public Transform indicator;
+    public Transform cameraTransform;
 
     void Start() {
         indicator = DamageIndicator.rectTransform;
@@ -114,18 +115,14 @@ public class PlayerHealth : MonoBehaviour {
 
     }
 
-    public void DamageDirection(Transform enemyTransform, bool enemyOnStairs) {
-        Vector3 direction = Camera.main.WorldToScreenPoint(enemyTransform.transform.position);
-        Vector3 point = Vector3.zero;
-
-        point.z = Mathf.Atan2((indicator.transform.position.y - direction.y), (indicator.transform.position.x - direction.x)) * Mathf.Rad2Deg - 90;
-        
-        if (Math.Abs(point.z) < 90 || enemyOnStairs) {
-            indicator.transform.rotation = Quaternion.Euler(point * -1);
+    public void DamageDirection(Transform enemyTransform) {
+        Vector3 relativePos = enemyTransform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+        float rot = Quaternion.Angle(rotation, transform.localRotation);
+        if (Vector3.Dot(transform.right, relativePos) > 0f) {
+            rot = -rot;
         }
-        else {
-            indicator.transform.rotation = Quaternion.Euler(point);
-        }
+        indicator.transform.localRotation = Quaternion.Euler(0, 0, rot);
     }
 
     /*private void OnTriggerEnter(Collider other) {

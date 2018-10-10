@@ -30,6 +30,7 @@ public class Follow : MonoBehaviour
     RaycastHit rayHit;
     AudioSource enemysound;
     public bool isBoss;
+    public bool isMG;
 
 
     // Use this for initialization
@@ -161,7 +162,12 @@ public class Follow : MonoBehaviour
     }*/
 
     public IEnumerator GunCoolDown() {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3.5f);
+        canShoot = true;
+    }
+
+    public IEnumerator GunCoolDownMG() {
+        yield return new WaitForSeconds(1.5f);
         canShoot = true;
     }
 
@@ -206,41 +212,41 @@ public class Follow : MonoBehaviour
     }
 
     void Attack() {
-        //Debug.Log(canShoot);
-
-        //if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
-            //GameObject bloodEffect = (GameObject)Instantiate(Resources.Load("Blood Effect"));
-            //Debug.Log(rayHit.transform.name);
-            //rayHit.transform.SendMessage("DamagePlayer", damage, SendMessageOptions.DontRequireReceiver);
-            if (rayHit.transform.gameObject == playerTarget) {
-                PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
-                if (target != null && canShoot) {
-                    GetComponent<AudioSource>().Play();
-                    canShoot = false;
-                    float rdm = UnityEngine.Random.value;
-                    float missPercent = (rayHit.distance + 70) / 100;
-                    if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
-                        target.DamageDirection(GetComponent<Transform>(), enemyOnStairs);
-                        if (isBoss) {
-                            target.TakeDamage(bossDamage);
-                        }
-                        else {
-                            target.TakeDamage(damage);
-                        }
-                        ammo--;
-                        if (ammo <= 0) {
-                            anim.SetBool("isShooting", false);
-                            anim.SetBool("isReload", true);
-                            StartCoroutine("WaitReload");
-                            //Debug.Log(reload);
-                        }
+        if (rayHit.transform.gameObject == playerTarget) {
+            PlayerHealth target = rayHit.transform.GetComponent<PlayerHealth>();
+            if (target != null && canShoot) {
+                GetComponent<AudioSource>().Play();
+                canShoot = false;
+                float rdm = UnityEngine.Random.value;
+                float missPercent = (rayHit.distance + 60) / 100;
+                //Debug.Log(missPercent);
+                if ((rdm > missPercent || rayHit.distance <= 1) && ammo > 0) {
+                    target.DamageDirection(GetComponent<Transform>());
+                    if (isBoss) {
+                        target.TakeDamage(bossDamage);
+                    }
+                    else {
+                        target.TakeDamage(damage);
+                    }
+                    ammo--;
+                    if (ammo <= 0) {
+                        anim.SetBool("isShooting", false);
+                        anim.SetBool("isReload", true);
+                        StartCoroutine("WaitReload");
+                        //Debug.Log(reload);
                     }
                 }
+            }
+            else {
+                //Debug.Log("start coroutine");
+                if (isMG) {
+                    StartCoroutine("GunCoolDownMG");
+                }
                 else {
-                    //Debug.Log("start coroutine");
                     StartCoroutine("GunCoolDown");
                 }
             }
+        }
         //}
     }
 
