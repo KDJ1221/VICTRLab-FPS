@@ -54,10 +54,10 @@ public class Target : MonoBehaviour
     }
 
     IEnumerator AmmoAndBloodDrop() {
+        cc.enabled = false;
         yield return new WaitForSeconds(waitDrop);
         Blood.transform.position = new Vector3(Chest.transform.position.x, Blood.transform.position.y, Chest.transform.position.z);
         HeldGun.SetActive(false);
-        cc.enabled = false;
         LeaveAmmo.SetActive(true);
         Blood.SetActive(true);
     }
