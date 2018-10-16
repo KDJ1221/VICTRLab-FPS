@@ -31,14 +31,15 @@ public class Target : MonoBehaviour
             StartCoroutine(AmmoAndBloodDrop());
             enemyCount--;
             totalCount--;
-            if (enemyCount <= 0) {
+            followScript.ChangeDamage("raise");
+            /*if (enemyCount <= 0) {
                 enemyCount = 6;
                 followScript.ChangeDamage("reset");
             }
             else {
                 followScript.ChangeDamage("raise");
                 //Debug.Log(enemyCount);
-            }
+            }*/
         }
     }
 
@@ -66,8 +67,8 @@ public class Target : MonoBehaviour
         return enemyCount;
     }
 
-    public void ResetCount() {
-        enemyCount = 6;
+    public void ResetCount(int count) {
+        enemyCount = count;
         followScript.ammo = UnityEngine.Random.Range(1, 15);
         followScript.ChangeDamage("reset");
     }

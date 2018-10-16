@@ -252,7 +252,7 @@ public class Follow : MonoBehaviour
 
     public void ChangeDamage(string change) {
         if (change.Equals("raise")) {
-            damage += 1.0f;
+            damage += 0.7f;
         }
         else if (change.Equals("reset")) {
             damage = 0.7f;

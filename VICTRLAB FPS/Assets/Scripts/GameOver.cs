@@ -13,7 +13,7 @@ public class GameOver : MonoBehaviour {
         Cursor.visible = true;
     }
     public void ReturnToMain() {
-        AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(20, 0);
+        AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(0, 0);
         SceneManager.LoadScene("Main Menu");
     }
 

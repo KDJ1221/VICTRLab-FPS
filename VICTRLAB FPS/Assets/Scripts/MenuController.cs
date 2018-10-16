@@ -16,6 +16,7 @@ public class MenuController : MonoBehaviour {
     public GameObject Enemy;
     public GameObject pauseMenu;
     public static bool isPaused;
+    public int count;
 
 	// Use this for initialization
 	void Start () {
@@ -56,14 +57,14 @@ public class MenuController : MonoBehaviour {
     public void ReturnToCheckpoint() {
         Time.timeScale = 1f;
         AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(StartingAmmo, ReserveAmmo);
-        Enemy.GetComponent<Target>().ResetCount();
+        Enemy.GetComponent<Target>().ResetCount(count);
         SceneManager.LoadScene(checkpointScene);
     }
 
     public void ReturnToMain() {
         Time.timeScale = 1f;
         AmmoObject.GetComponent<GlobalAmmo>().resetAmmo(0, 0);
-        Enemy.GetComponent<Target>().ResetCount();
+        Enemy.GetComponent<Target>().ResetCount(6);
         SceneManager.LoadScene(mainMenuScene);
     }
 
