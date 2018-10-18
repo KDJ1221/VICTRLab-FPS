@@ -45,7 +45,8 @@ public class Follow : MonoBehaviour
         cc = GetComponent<CapsuleCollider>();
         ammo = 15;
         //audioSource.clip = GetComponent<AudioClip>();
-        audioSource.PlayOneShot(GetComponent<AudioClip>());
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(enemyShot);
     }
 
     // Update is called once per frame
