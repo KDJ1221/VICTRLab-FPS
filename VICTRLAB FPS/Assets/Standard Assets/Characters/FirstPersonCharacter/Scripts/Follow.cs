@@ -28,7 +28,8 @@ public class Follow : MonoBehaviour
     private GameObject playerTarget;
     public Vector3 direction;
     RaycastHit rayHit;
-    AudioSource enemysound;
+    public AudioClip enemyShot;
+    AudioSource audioSource;
     public bool isBoss;
     public bool isMG;
 
@@ -43,7 +44,8 @@ public class Follow : MonoBehaviour
         playerTarget = GameObject.FindGameObjectWithTag("Player");
         cc = GetComponent<CapsuleCollider>();
         ammo = 15;
-        enemysound = GetComponent<AudioSource>();
+        //audioSource.clip = GetComponent<AudioClip>();
+        audioSource.PlayOneShot(GetComponent<AudioClip>());
     }
 
     // Update is called once per frame
