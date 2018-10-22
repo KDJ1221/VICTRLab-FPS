@@ -9,11 +9,11 @@ public class ResetEnemies : MonoBehaviour {
         if (col.gameObject.tag == "Player") {
             if (enemy.GetComponent<Target>().GetCount() <= 0) {
                 enemy.GetComponent<Target>().ResetCount(count);
-                //Debug.Log("Enemies reset");
+                Debug.Log("Enemies reset");
             }
-            /*else {
+            else {
                 Debug.Log("enemies not reset");
-            }*/
+            }
         }
     }
 }

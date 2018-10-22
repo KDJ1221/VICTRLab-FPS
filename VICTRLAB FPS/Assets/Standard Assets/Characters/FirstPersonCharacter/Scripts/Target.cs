@@ -7,6 +7,7 @@ public class Target : MonoBehaviour
 
     public static int enemyCount = 6;
     public static int totalCount;
+    public int count;
     public int totalInspector;
     public float health = 50f;
     public GameObject LeaveAmmo;
@@ -31,15 +32,17 @@ public class Target : MonoBehaviour
             StartCoroutine(AmmoAndBloodDrop());
             enemyCount--;
             totalCount--;
-            followScript.ChangeDamage("raise");
-            /*if (enemyCount <= 0) {
-                enemyCount = 6;
-                followScript.ChangeDamage("reset");
+            //followScript.ChangeDamage("raise");
+            if (enemyCount <= 0) {
+                //enemyCount = 6;
+                //followScript.ChangeDamage("reset");
+                ResetCount(count);
+
             }
             else {
                 followScript.ChangeDamage("raise");
                 //Debug.Log(enemyCount);
-            }*/
+            }
         }
     }
 
@@ -71,6 +74,8 @@ public class Target : MonoBehaviour
         enemyCount = count;
         followScript.ammo = UnityEngine.Random.Range(1, 15);
         followScript.ChangeDamage("reset");
+        Debug.Log("reset Count");
+        Debug.Log(count);
     }
 
     public int GetTotalCount() {
