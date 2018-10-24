@@ -78,6 +78,10 @@ public class Target : MonoBehaviour
         Debug.Log(count);
     }
 
+    public void ResetTotalCount(int count) {
+        totalCount = count;
+    }
+
     public int GetTotalCount() {
         return totalCount;
     }

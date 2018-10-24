@@ -26,7 +26,8 @@ public class LoadLevel1 : MonoBehaviour {
                 opacity = 173;
             }
             else {
-                SceneManager.LoadScene(sceneName);
+                PersistentManagerScript.Instance.loadScene = sceneName;
+                SceneManager.LoadScene("LoadingScreen");
             }
         }
     }

@@ -12,12 +12,14 @@ public class Play : MonoBehaviour {
     }
 
     public void PlayAsCop() {
-        SceneManager.LoadScene("Virtual Shop");
         PersistentManagerScript.Instance.isCop = false;
+        PersistentManagerScript.Instance.loadScene = "Virtual Shop";
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void PlayAsRobber() {
-        SceneManager.LoadScene("Virtual Shop");
         PersistentManagerScript.Instance.isCop = true;
+        PersistentManagerScript.Instance.loadScene = "Virtual Shop";
+        SceneManager.LoadScene("LoadingScreen");
     } 
 }

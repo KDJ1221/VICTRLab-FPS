@@ -10,6 +10,7 @@ public class PersistentManagerScript : MonoBehaviour {
     }
 
     public bool isCop;
+    public string loadScene;
 
     private void Awake() {
         if(Instance == null) {
