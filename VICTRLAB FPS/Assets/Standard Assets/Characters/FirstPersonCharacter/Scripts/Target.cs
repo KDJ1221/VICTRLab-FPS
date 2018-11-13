@@ -32,6 +32,7 @@ public class Target : MonoBehaviour
             StartCoroutine(AmmoAndBloodDrop());
             enemyCount--;
             totalCount--;
+            Debug.Log(enemyCount);
             //followScript.ChangeDamage("raise");
             if (enemyCount <= 0) {
                 //enemyCount = 6;

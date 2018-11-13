@@ -31,10 +31,16 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     void Update () {
-        if(playerHealth < 100 && Time.timeScale == 1) {
+        if(playerHealth < 60 && Time.timeScale == 1) {
+            playerHealth += 0.15;
+        }
+        else if (playerHealth < 80 && Time.timeScale == 1) {
+            playerHealth += 0.1;
+        }
+        else if (playerHealth < 100 && Time.timeScale == 1) {
             playerHealth += 0.05;
         }
-        if(bloodOpacity > 0 && Time.timeScale == 1) {
+        if (bloodOpacity > 0 && Time.timeScale == 1) {
             bloodOpacity -= 0.2;
         }
         if(splatterOpacity_1 > 0 && Time.timeScale == 1) {

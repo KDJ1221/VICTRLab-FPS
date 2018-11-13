@@ -7,11 +7,11 @@ public class Congratulations : MonoBehaviour {
 
     public Text congrats;
 	void Start () {
-		if (PersistentManagerScript.Instance.isCop) {
-            congrats.text = "Congratulations! \nYou escaped Nearstrom and have detained the robbers!";
+		if (!PersistentManagerScript.Instance.isCop) {
+            congrats.text = "Congratulations! \nYou escaped Nearstrom and successfully defeated the gang members!";
         }
         else {
-            congrats.text = "Congratulations! \nYou have escaped from the police!";
+            congrats.text = "Congratulations! \nYou escaped Nearstrom and successfully defeated the police officers!";
         }
 	}
 	

@@ -11,7 +11,7 @@ public class Follow : MonoBehaviour
     public Vector3 newPosition;
     public Vector3 origPosition;
     private static float damage = 0.7f;
-    private float bossDamage = 2.0f;
+    private float bossDamage = 3.0f;
     public int ammo;
     private Animator anim; //animations weren't working because it was static instead of private
     bool isDead = false;
@@ -80,7 +80,7 @@ public class Follow : MonoBehaviour
         }
 
         else if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100)) {
-            if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget) {
+            if (check > 0.97f && targetScript.GetCount() > 3 && distance > 2.0f && rayHit.transform.gameObject != playerTarget && !isBoss) {
                 anim.SetBool("isCrouch", true);
                 anim.SetBool("isShooting", false);
                 anim.SetBool("isIdle", false);

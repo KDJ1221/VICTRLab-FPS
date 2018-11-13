@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d4153f75d5b2c41b311ca98c2d8ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCop: 1
+  isCop: 0
   loadScene: 
 --- !u!4 &364046141
 Transform:
