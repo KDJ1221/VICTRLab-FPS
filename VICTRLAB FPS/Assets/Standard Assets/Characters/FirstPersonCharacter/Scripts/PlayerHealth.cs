@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour {
     void Update () {
         playHeartBeat();
         hitTimer += Time.deltaTime;
-        if (hitTimer > 5.0f)
+        if (hitTimer > 3.0f)
         {
             gettingHit = false;
         }
@@ -58,7 +58,7 @@ public class PlayerHealth : MonoBehaviour {
         //Health regenerating in real time
         if(playerHealth >= 0 && gettingHit == false)
         {
-            playerHealth += Time.deltaTime * 5;
+            playerHealth += Time.deltaTime * 10;
         }
 
         //Ensures player health is never more than max health
@@ -139,11 +139,10 @@ public class PlayerHealth : MonoBehaviour {
         }
 
         if(playerHealth <= 10) {
-            bloodOpacity = 180;
+            bloodOpacity = 150;
             splatterOpacity_1 = 200;
             splatterOpacity_2 = 200;
             splatterOpacity_3 = 200;
-            splatterOpacity_4 = 200;
         }
         else if(playerHealth <= 30) {
             bloodOpacity = 150;
