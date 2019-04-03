@@ -9,10 +9,6 @@ public class Play : MonoBehaviour {
     void Start() {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        //Skip Main Menu load and start scene as either
-        //a cop or robber
-        PlayAsRobber();
     }
 
     public void PlayAsCop() {

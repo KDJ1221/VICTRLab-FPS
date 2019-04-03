@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using System;
 
 public class PlayerHealth : MonoBehaviour {
+    private double maxHealth = 100;
+    private Boolean gettingHit = false;
+    private float hitTimer = 0.0f;
     double playerHealth = 100;
     double bloodOpacity = 0;
     double splatterOpacity_1 = 0;
@@ -25,42 +28,85 @@ public class PlayerHealth : MonoBehaviour {
     public RawImage DamageIndicator;
     public Transform indicator;
     public Transform cameraTransform;
+    private AudioSource[] sounds;
+    private AudioSource source;
+    private AudioSource audioHB140;
+    private AudioSource audioHB210;
+    public AudioClip heartBeat140;
+    public AudioClip heartBeat210;
+
+
 
     void Start() {
         indicator = DamageIndicator.rectTransform;
+        sounds = GetComponents<AudioSource>();
+        source = sounds[0];
+        audioHB140 = sounds[1];
+        audioHB210 = sounds[2];
     }
 
     void Update () {
-        if(playerHealth < 60 && Time.timeScale == 1) {
-            playerHealth += 0.15;
+        playHeartBeat();
+        hitTimer += Time.deltaTime;
+        if (hitTimer > 5.0f)
+        {
+            gettingHit = false;
         }
-        else if (playerHealth < 80 && Time.timeScale == 1) {
-            playerHealth += 0.1;
+
+
+        Debug.Log(playerHealth);
+        //Health regenerating in real time
+        if(playerHealth >= 0 && gettingHit == false)
+        {
+            playerHealth += Time.deltaTime * 5;
         }
-        else if (playerHealth < 100 && Time.timeScale == 1) {
-            playerHealth += 0.05;
+
+        //Ensures player health is never more than max health
+        if(playerHealth > maxHealth)
+        {
+            playerHealth = maxHealth;
         }
-        if (bloodOpacity > 0 && Time.timeScale == 1) {
-            bloodOpacity -= 0.2;
+
+        if(bloodOpacity > 0 && gettingHit == false)
+        {
+            bloodOpacity -= Time.deltaTime * 8;
         }
-        if(splatterOpacity_1 > 0 && Time.timeScale == 1) {
-            splatterOpacity_1 -= 0.8;
+
+        if (splatterOpacity_1 > 0 && gettingHit == false) {
+            splatterOpacity_1 -= Time.deltaTime * 10;
         }
-        if(splatterOpacity_2 > 0 && Time.timeScale == 1) {
-            splatterOpacity_2 -= 0.6;
+        if(splatterOpacity_2 > 0 && gettingHit == false) {
+            splatterOpacity_2 -= Time.deltaTime * 10;
         }
-        if(splatterOpacity_3 > 0 && Time.timeScale == 1) {
-            splatterOpacity_3 -= 0.4;
+        if(splatterOpacity_3 > 0 && gettingHit == false) {
+            splatterOpacity_3 -= Time.deltaTime * 10;
         }
-        if(splatterOpacity_4 > 0 && Time.timeScale == 1) {
-            splatterOpacity_4 -= 0.2;
+        if(splatterOpacity_4 > 0 && gettingHit == false) {
+            splatterOpacity_4 -= Time.deltaTime * 10;
         }
-        if(DamageOpacity > 0 && Time.timeScale == 1) {
+
+        if(playerHealth > 90) {
+            bloodOpacity = 0;
+            splatterOpacity_1 = 0;
+            splatterOpacity_2 = 0;
+            splatterOpacity_3 = 0;
+            splatterOpacity_4 = 0;
+        }
+
+        if (!gettingHit && playerHealth < 90 && playerHealth > 60)
+        {
+            bloodOpacity = 40;
+        }
+
+        if (DamageOpacity > 0 && Time.timeScale == 1) {
             DamageOpacity -= 5;
         }
         else if (DamageOpacity <= 0 && Time.timeScale == 1) {
             DamageOpacity = 0;
         }
+
+        Debug.Log(bloodOpacity + "," + splatterOpacity_1 + "," + splatterOpacity_2 + "," + 
+            splatterOpacity_3 + "," + splatterOpacity_4);
 
         HealthDisplay.GetComponent<Text>().text = "" + (int) playerHealth;
         Color color;
@@ -84,6 +130,8 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     public void TakeDamage(float amount) {
+        gettingHit = true;
+        hitTimer = 0.0f;
         playerHealth -= amount;
 
         if (playerHealth < 0) {
@@ -91,34 +139,33 @@ public class PlayerHealth : MonoBehaviour {
         }
 
         if(playerHealth <= 10) {
-            bloodOpacity = 255;
-            splatterOpacity_1 = 255;
-            splatterOpacity_2 = 255;
-            splatterOpacity_3 = 255;
-            splatterOpacity_4 = 255;
+            bloodOpacity = 180;
+            splatterOpacity_1 = 200;
+            splatterOpacity_2 = 200;
+            splatterOpacity_3 = 200;
+            splatterOpacity_4 = 200;
         }
         else if(playerHealth <= 30) {
             bloodOpacity = 150;
-            splatterOpacity_3 = 255;
-            splatterOpacity_2 = 255;
-            splatterOpacity_1 = 255;
+            splatterOpacity_3 = 200;
+            splatterOpacity_2 = 200;
+            splatterOpacity_1 = 200;
         }
-        else if(playerHealth <= 50) {
+        else if(playerHealth <= 60) {
             bloodOpacity = 80;
-            splatterOpacity_2 = 255;
-            splatterOpacity_1 = 255;
+            splatterOpacity_2 = 200;
+            splatterOpacity_1 = 200;
+
         }
-        else if(playerHealth <= 70) {
+        else if(playerHealth < 90) {
+            bloodOpacity = 40;
             splatterOpacity_1 = 255;
+            splatterOpacity_2 = 255;
         }
 
         if (playerHealth < 100) {
             DamageOpacity = 255;
         }
-        
-        
-
-
     }
 
     public void DamageDirection(Transform enemyTransform) {
@@ -131,25 +178,31 @@ public class PlayerHealth : MonoBehaviour {
         indicator.transform.localRotation = Quaternion.Euler(0, 0, rot);
     }
 
-    /*private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "Strong Enemy") {
-            playerHealth -= 10;
-            if(playerHealth < 0) {
-                playerHealth = 1;
-            }
-         
-            if(playerHealth <= 10) {
-                bloodOpacity = 255;
-            }
-            else if(playerHealth <= 30) {
-                bloodOpacity = 150;
-            }
-            else if(playerHealth <= 50) {
-                bloodOpacity = 80;
-            }
-            if(other.gameObject.tag == "Strong Enemy") {
-                playerHealth = -100;
-            }
+    public void playHeartBeat()
+    {
+        if (playerHealth < 90 && playerHealth > 60)
+        {
+            
+            if (audioHB210.isPlaying)
+                audioHB210.Stop();
+            if (!audioHB140.isPlaying)
+                audioHB140.Play();
+                
         }
-    }*/
+        else if (playerHealth <= 60)
+        {
+            if (audioHB140.isPlaying)
+                audioHB140.Stop();
+            if (!audioHB210.isPlaying)
+                audioHB210.Play();
+        }
+        else
+        {
+            if (audioHB140.isPlaying)
+                audioHB140.Stop();
+            if (audioHB210.isPlaying)
+                audioHB210.Stop();
+
+        }
+    }
 }

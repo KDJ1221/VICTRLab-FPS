@@ -19,15 +19,28 @@ public class Target : MonoBehaviour
     float waitDrop;
     CapsuleCollider cc;
 
+    public AudioClip shotHitSoft;
+    public AudioClip dyingSound;
+    private AudioClip origSound; //Original AudioClip attached to AudioSource
+
+    private AudioSource source;
+
     void Start() {
         followScript = GetComponent<Follow>();
         cc = GetComponent<CapsuleCollider>();
         totalCount = totalInspector;
+
+        source = GetComponent<AudioSource>();
+        origSound = source.clip;
     }
 
     void Update() {
         if (health <= 0 && !isDead) {
             isDead = true;
+
+            //Play the dyingsound one time
+            source.PlayOneShot(dyingSound, 1.0F);
+
             waitDrop = followScript.Die();
             StartCoroutine(AmmoAndBloodDrop());
             enemyCount--;
@@ -49,6 +62,8 @@ public class Target : MonoBehaviour
 
     public void TakeDamage(float amount) {
         health -= amount;
+        Debug.Log("Hit");
+        source.PlayOneShot(shotHitSoft, 1.0F);
         /*if(health <= 0 && !isDead) {
             isDead = true;
             LeaveAmmo.SetActive(true);

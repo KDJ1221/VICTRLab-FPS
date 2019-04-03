@@ -11,9 +11,6 @@ public class LoadSceneAfterVideo : MonoBehaviour
 
     void Start()
     {
-        PersistentManagerScript.Instance.isCop = false;
-        PersistentManagerScript.Instance.loadScene = "IntroPO";
-
         VideoPlayer.loopPointReached += LoadNewScene;
     }
 
